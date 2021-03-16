@@ -3,6 +3,7 @@ import validate from 'express-validation';
 
 import * as userController from '../controllers/user/user.controller';
 import * as userValidator from '../controllers/user/user.validator';
+import * as encounterController from '../controllers/encounter/encounter.controller';
 
 const router = express.Router();
 
@@ -18,5 +19,9 @@ router.post(
   validate(userValidator.register),
   userController.register,
 );
+
+router.get('/getAllEncounters',encounterController.getAllEncounters);
+// router.get('/getEncounter',encounterController.getEncounter);
+// router.post('/addEncounter',encounterController.addEncounter);
 
 module.exports = router;

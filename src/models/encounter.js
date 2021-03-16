@@ -1,5 +1,3 @@
-
-
 module.exports = (sequelize, DataTypes) => {
     const Encounter = sequelize.define(
       'Encounter',

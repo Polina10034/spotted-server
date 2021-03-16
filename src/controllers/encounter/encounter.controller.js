@@ -1,6 +1,3 @@
-import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
-import axios from 'axios';
 import { Encounter } from '../../models';
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 
@@ -19,103 +16,77 @@ export const getAllEncounters = async (req, res) => {
   }
 };
 
-// export const register = async (req, res) => {
-//   try {
-//     const {
-//       email, password, firstName, lastName,
-//     } = req.body;
+export const addEncounter = async (req, res) => {
+  try {
+    const {
+      EncounterDate, SiteID, Email, SpottedCountReported,
+    } = req.body;
+        var payload = {};
+    if(req.user){
+        const {userId} = req.user;
+        payload = {
+            EncounterDate: EncounterDate,
+            ReporterEmail:Email,
+            SiteID: SiteID,
+            SpottedCountReported:SpottedCountReported,
+            Verified: false,
+            MediaType: 1,
+            ReportedBy:userId
+        };
+    }else{
+        payload = {
+            EncounterDate: EncounterDate,
+            ReporterEmail:Email,
+            SiteID: SiteID,
+            SpottedCountReported:SpottedCountReported,
+            Verified: false,
+            MediaType: 1,
+        };
+    }
+    const newEncounter = await Encounter.create(payload);
+    return successResponse(req, res, {newEncounter});
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 
-//     const user = await User.scope('withSecretColumns').findOne({
-//       where: { email },
-//     });
-//     if (user) {
-//       throw new Error('User already exists with same email');
-//     }
-//     const reqPass = crypto
-//       .createHash('md5')
-//       .update(password)
-//       .digest('hex');
-//     const payload = {
-//       email,
-//       firstName,
-//       lastName,
-//       password: reqPass,
-//       isVerified: false,
-//       verifyToken: uniqueId(),
-//     };
 
-//     const newUser = await User.create(payload);
-//     return successResponse(req, res, {});
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
+export const getEncounter = async (req, res) => {
+  try {
+    const { encounterId } = req.body;
+    const encounter = await Encounter.findOne({ where: { EncounterID: encounterId } });
+    return successResponse(req, res, { encounter });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 
-// export const login = async (req, res) => {
-//   try {
-//     const user = await User.scope('withSecretColumns').findOne({
-//       where: { email: req.body.email },
-//     });
-//     if (!user) {
-//       throw new Error('Incorrect Email Id/Password');
-//     }
-//     const reqPass = crypto
-//       .createHash('md5')
-//       .update(req.body.password || '')
-//       .digest('hex');
-//     if (reqPass !== user.password) {
-//       throw new Error('Incorrect Email Id/Password');
-//     }
-//     const token = jwt.sign(
-//       {
-//         user: {
-//           userId: user.id,
-//           email: user.email,
-//           createdAt: new Date(),
-//         },
-//       },
-//       process.env.SECRET,
-//     );
-//     delete user.dataValues.password;
-//     return successResponse(req, res, { user, token });
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
+export const updateEncounter = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const encounter = await Encounter.findOne({ where: { EncounterID: id } });
+    await Encounter
+    .update({ 
+        EncounterDate: req.body.EncounterDate,
+        ReporterEmail: req.body.ReporterEmail,
+        SiteID: req.body.SiteID,
+        SpottedCountReported: req.body.SpottedCountReported,
+        Verified: req.body.Verified,
+        MediaType: req.body.MediaType,  
+        }, { where: { EncounterID: id } });
+    return successResponse(req, res, {});
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 
-// export const profile = async (req, res) => {
-//   try {
-//     const { userId } = req.user;
-//     const user = await User.findOne({ where: { id: userId } });
-//     return successResponse(req, res, { user });
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
-
-// export const changePassword = async (req, res) => {
-//   try {
-//     const { userId } = req.user;
-//     const user = await User.scope('withSecretColumns').findOne({
-//       where: { id: userId },
-//     });
-
-//     const reqPass = crypto
-//       .createHash('md5')
-//       .update(req.body.oldPassword)
-//       .digest('hex');
-//     if (reqPass !== user.password) {
-//       throw new Error('Old password is incorrect');
-//     }
-
-//     const newPass = crypto
-//       .createHash('md5')
-//       .update(req.body.newPassword)
-//       .digest('hex');
-
-//     await User.update({ password: newPass }, { where: { id: user.id } });
-//     return successResponse(req, res, {});
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
+export const deleteEncounter = async (req, res) => {
+    try {
+      const id = req.query.id;
+      const encounter = await Encounter.findOne({ where: { EncounterID: id } });
+      await encounter.destroy();
+      return successResponse(req, res, {encounter});
+    } catch (error) {
+      return errorResponse(req, res, error.message);
+    }
+};

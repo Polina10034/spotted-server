@@ -17,8 +17,11 @@ router.post(
 );
 
 router.get('/getAllEncounters',encounterController.getAllEncounters);
-// router.get('/getEncounter',encounterController.getEncounter);
-// router.post('/addEncounter',encounterController.addEncounter);
+router.get('/getEncounter',encounterController.getEncounter);
+router.post('/addEncounter',encounterController.addEncounter);
+router.put('/updateEncounter',encounterController.updateEncounter);
+router.delete('/deleteEncounter',encounterController.deleteEncounter);
+
 
 
 

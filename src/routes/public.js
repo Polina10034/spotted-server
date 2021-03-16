@@ -21,7 +21,7 @@ router.post(
 );
 
 router.get('/getAllEncounters',encounterController.getAllEncounters);
-// router.get('/getEncounter',encounterController.getEncounter);
-// router.post('/addEncounter',encounterController.addEncounter);
+router.post('/addEncounter',encounterController.addEncounter);
+router.get('/getEncounter',encounterController.getEncounter);
 
 module.exports = router;

@@ -6,12 +6,8 @@ module.exports = (sequelize, DataTypes) => {
       {
         EncounterDate: {
           type: DataTypes.DATE,
+          
         },
-        EncounterID: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            allowNull: false,
-          },
         SiteID: {
           type: DataTypes.INTEGER,
         },
@@ -45,6 +41,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         OriginalID: {
             type: DataTypes.STRING,
+          },
+          EncounterID: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+
           },
       },{
         timestamps: false,

@@ -3,6 +3,8 @@ import validate from 'express-validation';
 import * as userController from '../controllers/user/user.controller';
 import * as userValidator from '../controllers/user/user.validator';
 import * as encounterController from '../controllers/encounter/encounter.controller';
+import * as identifiedEncounterController from '../controllers/encounter/identifedEncounter.controller';
+;
 const router = express.Router();
 
 // // TODO api loggedin  routes
@@ -20,6 +22,11 @@ router.get('/getEncounter',encounterController.getEncounter);
 router.post('/addEncounter',encounterController.addEncounter);
 router.put('/updateEncounter',encounterController.updateEncounter);
 router.delete('/deleteEncounter',encounterController.deleteEncounter);
+
+router.get('/getAllIdentifiedEncounters',identifiedEncounterController.getAllIdentifiedEncounters);
+router.put('/updateIdentifiedEncounter',identifiedEncounterController.updateIdentifiedEncounter);
+router.delete('/deleteIdentifiedEncounter',identifiedEncounterController.deleteIdentifiedEncounter);
+
 
 
 

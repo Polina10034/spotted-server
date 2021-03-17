@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
       {
         EncounterDate: {
           type: DataTypes.DATE,
-          
         },
         SiteID: {
           type: DataTypes.INTEGER,

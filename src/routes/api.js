@@ -4,7 +4,8 @@ import * as userController from '../controllers/user/user.controller';
 import * as userValidator from '../controllers/user/user.validator';
 import * as encounterController from '../controllers/encounter/encounter.controller';
 import * as identifiedEncounterController from '../controllers/encounter/identifedEncounter.controller';
-;
+import * as boundingBoxController from '../controllers/photo/boundingBox.controller';
+
 const router = express.Router();
 
 // // TODO api loggedin  routes
@@ -27,6 +28,8 @@ router.get('/getAllIdentifiedEncounters',identifiedEncounterController.getAllIde
 router.put('/updateIdentifiedEncounter',identifiedEncounterController.updateIdentifiedEncounter);
 router.delete('/deleteIdentifiedEncounter',identifiedEncounterController.deleteIdentifiedEncounter);
 
+router.post('/addBoundingBox',boundingBoxController.addBoundingBox);
+router.get('/getBoundingBox',boundingBoxController.getBoundingBox);
 
 
 

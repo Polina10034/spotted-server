@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
             BoundingBoxID: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
-                allowNull: false,
+                autoIncrement: true
             },
             PhotoID: {
                 type: DataTypes.INTEGER,
@@ -22,7 +22,10 @@ module.exports = (sequelize, DataTypes) => {
             Height: {
                 type: DataTypes.STRING,
             },
-        },
+        },{
+            timestamps: false,
+          }
+    
     );
     // BoundingBox.associate = function (models) {
     //     // associations can be defined here

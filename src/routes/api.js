@@ -3,7 +3,7 @@ import validate from 'express-validation';
 import * as userController from '../controllers/user/user.controller';
 import * as userValidator from '../controllers/user/user.validator';
 import * as encounterController from '../controllers/encounter/encounter.controller';
-import * as photoController from '../controllers/photo/photo.controller';
+import * as photoController from '../controllers/photo/azurephoto.controller';
 import * as identifiedEncounterController from '../controllers/encounter/identifedEncounter.controller';
 
 const multer = require('multer')

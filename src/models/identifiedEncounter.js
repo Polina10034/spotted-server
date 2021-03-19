@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         IdentifiedEncounterID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            allowNull: false,
+            autoIncrement: true
           },
         Photographer: {
           type: DataTypes.STRING,
@@ -55,7 +55,10 @@ module.exports = (sequelize, DataTypes) => {
         ProfilePicture: {
             type: DataTypes.STRING,
         },
-      },
+      },{
+        timestamps: false,
+      }
+
 
     );
     // IdentifiedEncounter.associate = function (models) {

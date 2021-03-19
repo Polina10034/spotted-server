@@ -4,10 +4,12 @@ import * as userController from '../controllers/user/user.controller';
 import * as userValidator from '../controllers/user/user.validator';
 import * as encounterController from '../controllers/encounter/encounter.controller';
 import * as photoController from '../controllers/photo/photo.controller';
+import * as identifiedEncounterController from '../controllers/encounter/identifedEncounter.controller';
 
 const multer = require('multer')
 const inMemoryStorage = multer.memoryStorage();
 const singleFileUpload = multer({ storage: inMemoryStorage });
+
 const router = express.Router();
 
 // // TODO api loggedin  routes
@@ -27,6 +29,13 @@ router.put('/updateEncounter',encounterController.updateEncounter);
 router.delete('/deleteEncounter',encounterController.deleteEncounter);
 
 router.post('/uploadphoto', singleFileUpload.single('image'), photoController.imageUpload);
+router.get('/getAllIdentifiedEncounters',identifiedEncounterController.getAllIdentifiedEncounters);
+router.put('/updateIdentifiedEncounter',identifiedEncounterController.updateIdentifiedEncounter);
+router.delete('/deleteIdentifiedEncounter',identifiedEncounterController.deleteIdentifiedEncounter);
+
+
+
+
 
 
 module.exports = router;

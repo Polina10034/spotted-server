@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
             Height: {
                 type: DataTypes.STRING,
             },
+            Confidence:{
+                type: DataTypes.INTEGER,
+
+            }
         },{
             timestamps: false,
           }

@@ -4,16 +4,16 @@ import { successResponse, errorResponse} from '../../helpers';
 export const addBoundingBox = async (req, res) => {
   try {
     const {
-        PhotoID, Left_x, Top_y, Width, Height, Confidence
+      confidences, photoId, x, y, w, h
     } = req.body;
         var payload = {};
         payload = {
-            PhotoID: PhotoID,
-            Left_x:Left_x,
-            Top_y: Top_y,
-            Width:Width,
-            Height: Height,
-            Confidence: Confidence
+          Confidence: confidences,
+            PhotoID: photoId,
+            Left_x:x,
+            Top_y: y,
+            Width:w,
+            Height: h,
         };
     const newBoundingBox = await BoundingBox.create(payload);
     return successResponse(req, res, {newBoundingBox});

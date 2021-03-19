@@ -19,21 +19,17 @@ export const getAllPhotos = async (req, res) => {
 export const addPhoto = async (req, res) => {
   try {
     const {
-      EncounterID, CountPerImage, UploadDate, FirstSystemResultID, SecoundSystemResultID, EncounterGroupID, PathPhoto
+      id, count, url
   } = req.body;
       var payload = {};
       payload = {
-          EncounterID: EncounterID,
-          CountPerImage:CountPerImage,
-          UploadDate: UploadDate,
+          EncounterID: id,
+          CountPerImage:count,
           RightSide: false,
           LeftSide: false,
           FrontSide: false,
           TopSide: false,
-          FirstSystemResultID: FirstSystemResultID,
-          SecoundSystemResultID: SecoundSystemResultID,
-          EncounterGroupID: EncounterGroupID,
-          PathPhoto: PathPhoto     
+          PathPhoto: url     
       };
   const newPhoto = await Photo.create(payload);
   return successResponse(req, res, {newPhoto});

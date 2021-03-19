@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.INTEGER,
         },
         UploadDate: {
-          type: DataTypes.DATE,
+          type: DataTypes.NOW,
+          default: new Date().getTime()
         },
         RightSide: {
             type: DataTypes.BOOLEAN,

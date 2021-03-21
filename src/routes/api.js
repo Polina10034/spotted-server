@@ -35,6 +35,8 @@ router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoControll
 router.get('/getAllIdentifiedEncounters',identifiedEncounterController.getAllIdentifiedEncounters);
 router.put('/updateIdentifiedEncounter',identifiedEncounterController.updateIdentifiedEncounter);
 router.delete('/deleteIdentifiedEncounter',identifiedEncounterController.deleteIdentifiedEncounter);
+router.post('/addIdentifiedEncounter',identifiedEncounterController.addIdentifiedEncounter);
+
 
 router.post('/addBoundingBox',boundingBoxController.addBoundingBox);
 router.get('/getBoundingBox',boundingBoxController.getBoundingBox);

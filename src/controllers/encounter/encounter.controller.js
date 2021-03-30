@@ -6,9 +6,9 @@ export const getAllEncounters = async (req, res) => {
     const page = req.params.page || 1;
     const limit = 2;
     const encounters = await Encounter.findAndCountAll({
-    //   order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
-      offset: (page - 1) * limit,
-      limit,
+      order: [['CreatedAt', 'DESC']],
+    //   offset: (page - 1) * limit,
+    //   limit,
     });
     return successResponse(req, res, { encounters });
   } catch (error) {
@@ -53,8 +53,8 @@ export const addEncounter = async (req, res) => {
 
 export const getEncounter = async (req, res) => {
   try {
-    const { encounterId } = req.body;
-    const encounter = await Encounter.findOne({ where: { EncounterID: encounterId } });
+    const id = req.query.id;
+    const encounter = await Encounter.findOne({ where: { EncounterID: id } });
     return successResponse(req, res, { encounter });
   } catch (error) {
     return errorResponse(req, res, error.message);

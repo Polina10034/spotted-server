@@ -33,6 +33,7 @@ router.delete('/deleteEncounter',encounterController.deleteEncounter);
 
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
 router.get('/getAllIdentifiedEncounters',identifiedEncounterController.getAllIdentifiedEncounters);
+router.get('/getIdentifiedEncounter',identifiedEncounterController.getIdentifiedEncounter);
 router.put('/updateIdentifiedEncounter',identifiedEncounterController.updateIdentifiedEncounter);
 router.delete('/deleteIdentifiedEncounter',identifiedEncounterController.deleteIdentifiedEncounter);
 router.post('/addIdentifiedEncounter',identifiedEncounterController.addIdentifiedEncounter);

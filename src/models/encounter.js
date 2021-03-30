@@ -8,9 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         SiteID: {
           type: DataTypes.INTEGER,
         },
-        IdentifiedEncounterID: {
-          type: DataTypes.INTEGER,
-        },
         ManualResultsID: {
           type: DataTypes.INTEGER,
         },
@@ -51,8 +48,12 @@ module.exports = (sequelize, DataTypes) => {
 
     );
     // Encounter.associate = function (models) {
-    //   // associations can be defined here
-    // };
+    //   Encounter.hasMany(models.Photo, {
+    //     foreignKey: {
+    //       name: 'EncounterID',
+    //       allowNull: false
+    //     }
+    //   })    };
     return Encounter;
   };
   

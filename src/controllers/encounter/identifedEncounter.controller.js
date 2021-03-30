@@ -4,11 +4,8 @@ import { successResponse, errorResponse, uniqueId } from '../../helpers';
 export const getAllIdentifiedEncounters = async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const limit = 2;
     const identifiedEncounters = await IdentifiedEncounter.findAndCountAll({
-       //order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
-      offset: (page - 1) * limit,
-      limit,
+       order: [['UpdatedAt', 'DESC']],
     });
     return successResponse(req, res, { identifiedEncounters });
   } catch (error) {
@@ -72,8 +69,9 @@ export const addIdentifiedEncounter = async (req, res) => {
 
 export const getIdentifiedEncounter = async (req, res) => {
   try {
-    const { identifiedEncounterId } = req.body;
-    const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: identifiedEncounterId } });
+    // const { identifiedEncounterId } = req.body;
+    const id = req.query.id;
+    const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
     return successResponse(req, res, { identifiedEncounter });
   } catch (error) {
     return errorResponse(req, res, error.message);

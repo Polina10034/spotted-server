@@ -45,7 +45,8 @@ export const register = async (req, res) => {
     };
 
     const newUser = await User.create(payload);
-    return successResponse(req, res, {});
+    newUser.password = undefined;
+    return successResponse(req, res, {newUser});
   } catch (error) {
     return errorResponse(req, res, error.message);
   }

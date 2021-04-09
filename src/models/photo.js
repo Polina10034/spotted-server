@@ -38,8 +38,9 @@ module.exports = (sequelize, DataTypes) => {
         EncounterGroupID: {
             type: DataTypes.INTEGER,
         },
-        PathPhoto: {
+        src: {
             type: DataTypes.STRING,
+            field: 'PathPhoto'
         },
       },{
         timestamps: false,

@@ -1,15 +1,57 @@
 import { Photo } from '../../models';
 import { successResponse, errorResponse} from '../../helpers';
+const Sequelize = require('sequelize');
+
+const Op = Sequelize.Op;
 
 export const getAllPhotos = async (req, res) => {
   try {
     const page = req.params.page || 1;
-    const limit = 2;
     const photos = await Photo.findAndCountAll({
     //   order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
-      offset: (page - 1) * limit,
-      limit,
     });
+    return successResponse(req, res, { photos });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+export const getEncounterPhotos = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const photos = await Photo.findAll({
+      where: { 
+        EncounterID: id,
+        PathPhoto: {
+        [Op.not]: null, // Like: sellDate IS NOT NULL
+    },
+    },
+      attributes: ['src']
+    });
+    return successResponse(req, res, { photos });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+
+export const getIdntEncounterPhotos = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const photos = await Photo.findAll({
+      where: { 
+        IdentifiedID: id,
+        PathPhoto: {
+        [Op.not]: null, // Like: sellDate IS NOT NULL
+    },
+    },
+      attributes: ['src']
+    });
+    // const photos = await Photo.findAndCountAll({
+    //   where: { EncounterID: id },
+    //   attributes: ['PathPhoto'],
+    //   // include: [ { model: UserRole, as: 'Role', include: [{model: Permission, as: 'Permissions', attributes: {include:['id', 'name'], exclude:'UserRolePermission' } }] } ]
+   
+    // });
     return successResponse(req, res, { photos });
   } catch (error) {
     return errorResponse(req, res, error.message);

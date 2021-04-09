@@ -44,6 +44,9 @@ router.get('/getBoundingBox',boundingBoxController.getBoundingBox);
 
 router.post('/addPhoto',photoController.addPhoto);
 router.get('/getAllPhotos',photoController.getAllPhotos);
+router.get('/getEncounterPhotos',photoController.getEncounterPhotos);
+router.get('/getIdntEncounterPhotos',photoController.getIdntEncounterPhotos);
+
 router.get('/getPhoto',photoController.getPhoto);
 router.put('/updatePhoto',photoController.updatePhoto);
 router.delete('/deletePhoto',photoController.deletePhoto);

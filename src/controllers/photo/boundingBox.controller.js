@@ -1,22 +1,22 @@
 import { BoundingBox } from '../../models';
-import { successResponse, errorResponse} from '../../helpers';
+import { successResponse, errorResponse } from '../../helpers';
 
 export const addBoundingBox = async (req, res) => {
   try {
     const {
-      confidences, photoId, x, y, w, h
+      confidences, photoId, x, y, w, h,
     } = req.body;
-        var payload = {};
-        payload = {
-          Confidence: confidences,
-            PhotoID: photoId,
-            Left_x:x,
-            Top_y: y,
-            Width:w,
-            Height: h,
-        };
+    let payload = {};
+    payload = {
+      Confidence: confidences,
+      PhotoID: photoId,
+      Left_x: x,
+      Top_y: y,
+      Width: w,
+      Height: h,
+    };
     const newBoundingBox = await BoundingBox.create(payload);
-    return successResponse(req, res, {newBoundingBox});
+    return successResponse(req, res, { newBoundingBox });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
@@ -32,5 +32,3 @@ export const getBoundingBox = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
-
-

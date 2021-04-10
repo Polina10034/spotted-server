@@ -16,21 +16,21 @@ require('./src/config/sequelize');
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 
-var whitelist = [
-    'http://localhost:3000'
-  ];
+const whitelist = [
+  'http://localhost:3000',
+];
 
-var corsOptions = {
-    credentials: true,
-    origin: function(origin, callback) {
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(null, true);
-      }
-    },
-  };
-  
+const corsOptions = {
+  credentials: true,
+  origin(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(null, true);
+    }
+  },
+};
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/pub', publicRoutes);

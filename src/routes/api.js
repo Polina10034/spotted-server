@@ -7,9 +7,11 @@ import * as azurePhotoController from '../controllers/photo/azurephoto.controlle
 import * as identifiedEncounterController from '../controllers/encounter/identifedEncounter.controller';
 import * as boundingBoxController from '../controllers/photo/boundingBox.controller';
 import * as photoController from '../controllers/photo/photo.controller';
+import * as siteController from '../controllers/site/site.controller';
 
 
-const multer = require('multer')
+const multer = require('multer');
+
 const inMemoryStorage = multer.memoryStorage();
 const singleFileUpload = multer({ storage: inMemoryStorage });
 
@@ -25,31 +27,33 @@ router.post(
   userController.changePassword,
 );
 
-router.get('/getAllEncounters',encounterController.getAllEncounters);
-router.get('/getEncounter',encounterController.getEncounter);
-router.post('/addEncounter',encounterController.addEncounter);
-router.put('/updateEncounter',encounterController.updateEncounter);
-router.delete('/deleteEncounter',encounterController.deleteEncounter);
+router.get('/getAllEncounters', encounterController.getAllEncounters);
+router.get('/getEncounter', encounterController.getEncounter);
+router.post('/addEncounter', encounterController.addEncounter);
+router.put('/updateEncounter', encounterController.updateEncounter);
+router.delete('/deleteEncounter', encounterController.deleteEncounter);
 
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
-router.get('/getAllIdentifiedEncounters',identifiedEncounterController.getAllIdentifiedEncounters);
-router.get('/getIdentifiedEncounter',identifiedEncounterController.getIdentifiedEncounter);
-router.put('/updateIdentifiedEncounter',identifiedEncounterController.updateIdentifiedEncounter);
-router.delete('/deleteIdentifiedEncounter',identifiedEncounterController.deleteIdentifiedEncounter);
-router.post('/addIdentifiedEncounter',identifiedEncounterController.addIdentifiedEncounter);
+router.get('/getAllIdentifiedEncounters', identifiedEncounterController.getAllIdentifiedEncounters);
+router.get('/getIdentifiedEncounter', identifiedEncounterController.getIdentifiedEncounter);
+router.put('/updateIdentifiedEncounter', identifiedEncounterController.updateIdentifiedEncounter);
+router.delete('/deleteIdentifiedEncounter', identifiedEncounterController.deleteIdentifiedEncounter);
+router.post('/addIdentifiedEncounter', identifiedEncounterController.addIdentifiedEncounter);
 
 
-router.post('/addBoundingBox',boundingBoxController.addBoundingBox);
-router.get('/getBoundingBox',boundingBoxController.getBoundingBox);
+router.post('/addBoundingBox', boundingBoxController.addBoundingBox);
+router.get('/getBoundingBox', boundingBoxController.getBoundingBox);
 
-router.post('/addPhoto',photoController.addPhoto);
-router.get('/getAllPhotos',photoController.getAllPhotos);
-router.get('/getEncounterPhotos',photoController.getEncounterPhotos);
-router.get('/getIdntEncounterPhotos',photoController.getIdntEncounterPhotos);
+router.post('/addPhoto', photoController.addPhoto);
+router.get('/getAllPhotos', photoController.getAllPhotos);
+router.get('/getEncounterPhotos', photoController.getEncounterPhotos);
+router.get('/getIdntEncounterPhotos', photoController.getIdntEncounterPhotos);
 
-router.get('/getPhoto',photoController.getPhoto);
-router.put('/updatePhoto',photoController.updatePhoto);
-router.delete('/deletePhoto',photoController.deletePhoto);
+router.get('/getPhoto', photoController.getPhoto);
+router.put('/updatePhoto', photoController.updatePhoto);
+router.delete('/deletePhoto', photoController.deletePhoto);
+
+router.get('/getAllIsraeliSites', siteController.getAllIsraeliSites);
 
 
 module.exports = router;

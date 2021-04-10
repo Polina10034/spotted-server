@@ -16,11 +16,14 @@ module.exports = (sequelize, DataTypes) => {
       CountPerImage: {
         type: DataTypes.INTEGER,
       },
-      UploadDate: {
-        type: DataTypes.DATE,
-      },
       VideoPath: {
         type: DataTypes.STRING,
+      },
+      CreatedAt: {
+        type: DataTypes.DATE,
+      },
+      UpdatedAt: {
+        type: DataTypes.DATE,
       },
     },
 

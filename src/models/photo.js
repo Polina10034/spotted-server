@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       CountPerImage: {
         type: DataTypes.INTEGER,
       },
-      UploadDate: {
-        type: DataTypes.NOW,
-        default: new Date().getTime(),
-      },
       RightSide: {
         type: DataTypes.BOOLEAN,
       },
@@ -41,6 +37,13 @@ module.exports = (sequelize, DataTypes) => {
       src: {
         type: DataTypes.STRING,
         field: 'PathPhoto',
+      },
+      CreatedAt: {
+        type: DataTypes.NOW,
+        default: new Date().getTime(),
+      },
+      UpdatedAt: {
+        type: DataTypes.DATE,
       },
     }, {
       timestamps: false,

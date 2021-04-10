@@ -2,6 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const Encounter = sequelize.define(
     'Encounter',
     {
+      EncounterID: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       EncounterDate: {
         type: DataTypes.DATE,
       },
@@ -36,12 +41,16 @@ module.exports = (sequelize, DataTypes) => {
       OriginalID: {
         type: DataTypes.STRING,
       },
-      EncounterID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-
+      CreatedAt: {
+        type: DataTypes.DATE,
       },
+      UpdatedAt: {
+        type: DataTypes.DATE,
+      },
+      UpdatedBy: {
+        type: DataTypes.INTEGER,
+      },
+ 
     }, {
       timestamps: false, // TODO remove & test
     },

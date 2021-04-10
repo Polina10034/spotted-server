@@ -55,6 +55,15 @@ module.exports = (sequelize, DataTypes) => {
         ProfilePicture: {
             type: DataTypes.STRING,
         },
+        CreatedAt: {
+          type: DataTypes.DATE,
+        },
+        UpdatedAt: {
+          type: DataTypes.DATE,
+        },
+        UpdatedBy: {
+          type: DataTypes.INTEGER,
+        },
       },{
         timestamps: false,
       }

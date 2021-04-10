@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
             UserID: {
                 type: DataTypes.INTEGER,
             },
-            EnterDate: {
+            CreatedAt: {
+                type: DataTypes.DATE,
+            },
+            UpdatedAt: {
                 type: DataTypes.DATE,
             },
         },

@@ -8,6 +8,8 @@ import * as identifiedEncounterController from '../controllers/encounter/identif
 import * as boundingBoxController from '../controllers/photo/boundingBox.controller';
 import * as photoController from '../controllers/photo/photo.controller';
 import * as siteController from '../controllers/site/site.controller';
+import * as videoController from '../controllers/video/video.controller';
+import * as azureVideoController from '../controllers/video/azurevideo.controller';
 
 
 const multer = require('multer');
@@ -54,6 +56,16 @@ router.put('/updatePhoto', photoController.updatePhoto);
 router.delete('/deletePhoto', photoController.deletePhoto);
 
 router.get('/getAllIsraeliSites', siteController.getAllIsraeliSites);
+
+router.post('/addVideo', videoController.addVideo);
+//router.get('/getAllVideos', videoController.getAllVideos);
+router.get('/getEncounterVideos', videoController.getEncounterVideos);
+router.get('/getIdntEncounterVideos', videoController.getIdntEncounterVideos);
+
+//router.get('/getVideo', videoController.getVideo);
+//router.put('/updateVideo', videoController.updateVideo);
+//router.delete('/deleteVideo', videoController.deleteVideo);
+router.post('/uploadvideo', singleFileUpload.single('video'), azureVideoController.videoUpload);
 
 
 module.exports = router;

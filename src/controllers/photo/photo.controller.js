@@ -15,6 +15,7 @@ export const getAllPhotos = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
 export const getEncounterPhotos = async (req, res) => {
   try {
     const { id } = req.query;

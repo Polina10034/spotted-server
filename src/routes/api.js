@@ -10,7 +10,8 @@ import * as photoController from '../controllers/photo/photo.controller';
 import * as siteController from '../controllers/site/site.controller';
 import * as videoController from '../controllers/video/video.controller';
 import * as azureVideoController from '../controllers/video/azurevideo.controller';
-
+import * as firstSystemResults from '../controllers/systemResults/firstSystemResults.controller';
+import * as lifeStageController from '../controllers/encounter/lifeStage.controller';
 
 const multer = require('multer');
 
@@ -36,6 +37,8 @@ router.put('/updateEncounter', encounterController.updateEncounter);
 router.delete('/deleteEncounter', encounterController.deleteEncounter);
 
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
+router.post('/uploadrawphoto', singleFileUpload.single('image'), azurePhotoController.rawImageUpload);
+
 router.get('/getAllIdentifiedEncounters', identifiedEncounterController.getAllIdentifiedEncounters);
 router.get('/getIdentifiedEncounter', identifiedEncounterController.getIdentifiedEncounter);
 router.put('/updateIdentifiedEncounter', identifiedEncounterController.updateIdentifiedEncounter);
@@ -56,16 +59,25 @@ router.put('/updatePhoto', photoController.updatePhoto);
 router.delete('/deletePhoto', photoController.deletePhoto);
 
 router.get('/getAllIsraeliSites', siteController.getAllIsraeliSites);
+router.get('/getLifeStages', lifeStageController.getAllLifeStage);
+router.get('/getMediaTypes', lifeStageController.getMediaTypes);
 
 router.post('/addVideo', videoController.addVideo);
-//router.get('/getAllVideos', videoController.getAllVideos);
+// router.get('/getAllVideos', videoController.getAllVideos);
 router.get('/getEncounterVideos', videoController.getEncounterVideos);
 router.get('/getIdntEncounterVideos', videoController.getIdntEncounterVideos);
 
-//router.get('/getVideo', videoController.getVideo);
-//router.put('/updateVideo', videoController.updateVideo);
-//router.delete('/deleteVideo', videoController.deleteVideo);
-router.post('/uploadvideo', singleFileUpload.single('video'), azureVideoController.videoUpload);
+// router.get('/getVideo', videoController.getVideo);
+// router.put('/updateVideo', videoController.updateVideo);
+// router.delete('/deleteVideo', videoController.deleteVideo);
 
+router.post('/uploadVideo', singleFileUpload.single('video'), azureVideoController.videoUpload);
+
+router.post('/addFirstSystemResult', firstSystemResults.addFirstSystemResult);
+router.get('/getFirstSystemResult', firstSystemResults.getFirstSystemResult);
+router.get('/getAllFirstSystemResult', firstSystemResults.getAllFirstSystemResult);
+router.get('/getEncounterFirstSystemResult', firstSystemResults.getEncounterFirstSystemResults);
+
+router.post('/addEncounterFirstSystemResults', firstSystemResults.addEncounterFirstSystemResults);
 
 module.exports = router;

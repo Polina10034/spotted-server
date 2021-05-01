@@ -1,11 +1,12 @@
+/* eslint-disable max-len */
 import { IdentifiedEncounter } from '../../models';
-import { successResponse, errorResponse, uniqueId } from '../../helpers';
+import { successResponse, errorResponse } from '../../helpers';
 
 export const getAllIdentifiedEncounters = async (req, res) => {
   try {
-    const page = req.params.page || 1;
+    // const page = req.params.page || 1;
     const identifiedEncounters = await IdentifiedEncounter.findAndCountAll({
-       order: [['UpdatedAt', 'DESC']],
+      order: [['UpdatedAt', 'DESC']],
     });
     return successResponse(req, res, { identifiedEncounters });
   } catch (error) {
@@ -16,51 +17,33 @@ export const getAllIdentifiedEncounters = async (req, res) => {
 export const addIdentifiedEncounter = async (req, res) => {
   try {
     const {
-      Photographer, ReportTypeID, LifeStageID, TL, DL, DW, MaxDepth, Distance, Temp, Description, Comments, Link, 
+      Photographer, ReportTypeID, EncounterID, LifeStageID, TL, DL, DW, MaxDepth, Distance, Temp, Description, Comments, Link, Sex, isAlive, ProfilePicture,
     } = req.body;
-        var payload = {};
-    if(req.user){
-        const {userId} = req.user;
-        payload = {
-            Photographer: Photographer,
-            ReporterLifeStageID: LifeStageID,
-            ReportTypeID: ReportTypeID,
-            Sex: false,
-            isAlive: false,
-            TL: TL,
-            DL: DL,
-            DW: DW,
-            MaxDepth: MaxDepth,
-            Distance: Distance,
-            Temp: Temp,
-            Description: Description,
-            Comments: Comments,
-            SpeciesID: 1,
-            Link: Link,
-            UpdateBy:userId
+    let payload = {};
+    const { userId } = req.user;
+    payload = {
+      Photographer,
+      ReportTypeID,
+      LifeStageID,
+      EncounterID,
+      Sex,
+      isAlive: isAlive === 'yes' ? 1 : 0,
+      TL,
+      DL,
+      DW,
+      MaxDepth,
+      Distance,
+      Temp,
+      Description,
+      Comments,
+      Link,
+      UpdateBy: userId,
+      ProfilePicture,
 
-        };
-    }else{
-        payload = {
-            Photographer: Photographer,
-            ReporterLifeStageID:LifeStageID,
-            ReportTypeID: ReportTypeID,
-            Sex: false,
-            isAlive: false,
-            TL: TL,
-            DL: DL,
-            DW: DW,
-            MaxDepth: MaxDepth,
-            Distance: Distance,
-            Temp: Temp,
-            Description: Description,
-            Comments: Comments,
-            SpeciesID: 1,
-            Link: Link,
-        };
-    }
+    };
+
     const newIdentifiedEncounter = await IdentifiedEncounter.create(payload);
-    return successResponse(req, res, {newIdentifiedEncounter});
+    return successResponse(req, res, { newIdentifiedEncounter });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
@@ -70,7 +53,7 @@ export const addIdentifiedEncounter = async (req, res) => {
 export const getIdentifiedEncounter = async (req, res) => {
   try {
     // const { identifiedEncounterId } = req.body;
-    const id = req.query.id;
+    const { id } = req.query;
     const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
     return successResponse(req, res, { identifiedEncounter });
   } catch (error) {
@@ -80,15 +63,15 @@ export const getIdentifiedEncounter = async (req, res) => {
 
 export const updateIdentifiedEncounter = async (req, res) => {
   try {
-    const id = req.query.id;
-    const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
+    const { id } = req.query;
+    // const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
     await IdentifiedEncounter
-    .update({ 
+      .update({
         Photographer: req.body.Photographer,
-        ReporterLifeStageID: req.body.LifeStageID,
+        LifeStageID: req.body.LifeStageID,
         ReportTypeID: req.body.ReportTypeID,
         Sex: req.body.Sex,
-        isAlive: req.body.isAlive,
+        isAlive: req.body.isAlive === 'yes' ? 1 : 0,
         TL: req.body.TL,
         DL: req.body.DL,
         DW: req.body.DW,
@@ -100,7 +83,8 @@ export const updateIdentifiedEncounter = async (req, res) => {
         SpeciesID: req.body.SpeciesID,
         Link: req.body.Link,
         UpdateBy: req.body.UpdateBy,
-        }, { where: { IdentifiedEncounterID: id } });
+        ProfilePicture: req.body.ProfilePicture,
+      }, { where: { IdentifiedEncounterID: id } });
     return successResponse(req, res, {});
   } catch (error) {
     return errorResponse(req, res, error.message);
@@ -108,12 +92,12 @@ export const updateIdentifiedEncounter = async (req, res) => {
 };
 
 export const deleteIdentifiedEncounter = async (req, res) => {
-    try {
-      const id = req.query.id;
-      const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
-      await identifiedEncounter.destroy();
-      return successResponse(req, res, {identifiedEncounter});
-    } catch (error) {
-      return errorResponse(req, res, error.message);
-    }
+  try {
+    const { id } = req.query;
+    const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
+    await identifiedEncounter.destroy();
+    return successResponse(req, res, { identifiedEncounter });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
 };

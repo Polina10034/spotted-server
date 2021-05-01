@@ -50,9 +50,16 @@ module.exports = (sequelize, DataTypes) => {
       UpdatedBy: {
         type: DataTypes.INTEGER,
       },
- 
+      IsPregnant: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: null,
+      },
+      Gender: {
+        type: DataTypes.STRING,
+      },
     }, {
       timestamps: false, // TODO remove & test
+      hasTrigger: true,
     },
 
   );

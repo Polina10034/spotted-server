@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-console.log('hereee'+ process.env.DB_NAME);
+
+console.log(`hereee${process.env.DB_NAME}`);
 
 
 const sequelize = new Sequelize(
@@ -9,10 +10,10 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    dialectOptions: { 
+    dialectOptions: {
       options: {
-        encrypt: true
-      }
+        encrypt: true,
+      },
     },
   },
 );

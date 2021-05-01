@@ -4,11 +4,12 @@ import { successResponse, errorResponse } from '../../helpers';
 export const addBoundingBox = async (req, res) => {
   try {
     const {
-      confidences, photoId, x, y, w, h,
+      confidences, photoId, x, y, w, h, resultsID,
     } = req.body;
     let payload = {};
     payload = {
       Confidence: confidences,
+      FirstSystemResultsID: resultsID,
       PhotoID: photoId,
       Left_x: x,
       Top_y: y,

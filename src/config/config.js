@@ -7,11 +7,11 @@ const x = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    dialectOptions: { 
+    dialectOptions: {
       options: {
-        encrypt: true
-      }
-    }
+        encrypt: true,
+      },
+    },
   },
   test: {
     username: process.env.DB_USER,
@@ -19,11 +19,11 @@ const x = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    dialectOptions: { 
+    dialectOptions: {
       options: {
-        encrypt: true
-      }
-    }
+        encrypt: true,
+      },
+    },
   },
   production: {
     username: process.env.DB_USER,
@@ -31,11 +31,11 @@ const x = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
-    dialectOptions: { 
+    dialectOptions: {
       options: {
-        encrypt: true
-      }
-    }
+        encrypt: true,
+      },
+    },
   },
 };
 module.exports = x;

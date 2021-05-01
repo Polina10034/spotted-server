@@ -17,7 +17,7 @@ export const getAllEncounters = async (req, res) => {
 export const addEncounter = async (req, res) => {
   try {
     const {
-      EncounterDate, SiteID, Email, SpottedCountReported,
+      EncounterDate, SiteID, Email, SpottedCountReported, IsPregnant, Gender,
     } = req.body;
     let payload = {};
     if (req.user) {
@@ -30,6 +30,8 @@ export const addEncounter = async (req, res) => {
         Verified: false,
         MediaType: 1,
         ReportedBy: userId,
+        Gender,
+        IsPregnant: IsPregnant === 'Yes' ? 1 : 0,
       };
     } else {
       payload = {
@@ -39,6 +41,8 @@ export const addEncounter = async (req, res) => {
         SpottedCountReported,
         Verified: false,
         MediaType: 1,
+        Gender,
+        IsPregnant: IsPregnant === 'Yes' ? 1 : 0,
       };
     }
     const newEncounter = await Encounter.create(payload);
@@ -69,8 +73,9 @@ export const updateEncounter = async (req, res) => {
         ReporterEmail: req.body.ReporterEmail,
         SiteID: req.body.SiteID,
         SpottedCountReported: req.body.SpottedCountReported,
-        Verified: req.body.Verified,
+        Verified: req.body.Verified === 'yes' ? 1 : 0,
         MediaType: req.body.MediaType,
+        ProfilePicture: req.body.url,
       }, { where: { EncounterID: id } });
     return successResponse(req, res, {});
   } catch (error) {

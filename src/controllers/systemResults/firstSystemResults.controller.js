@@ -40,8 +40,9 @@ export const addFirstSystemResult = async (req, res) => {
 
 export const addEncounterFirstSystemResults = async (req, res) => {
   let newRow = {};
+  let deleteResult;
   const firstSystemResultsRes = [];
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     const { encounterId } = req.body;
@@ -49,7 +50,7 @@ export const addEncounterFirstSystemResults = async (req, res) => {
     const { photosBlobData } = req.body;
     const boundingBoxPayload = [];
     const photosPayload = [];
-    console.log(photosBlobData);
+    // console.log(photosBlobData);
     const lenght = results.length;
     const deletePhotos = [];
     for (let i = 0; i < lenght; i += 1) {
@@ -65,6 +66,7 @@ export const addEncounterFirstSystemResults = async (req, res) => {
 
       newRow = await FirstSystemResult.create(payload);
       firstSystemResultsRes.push(newRow);
+      // console.log(data);
       if (data !== undefined && newRow.FirstSystemResultID) {
         const blobPhoto = photosBlobData.find(item => item.filename === filename);
         let j = 0;
@@ -91,14 +93,21 @@ export const addEncounterFirstSystemResults = async (req, res) => {
           FirstSystemResultID: newRow.FirstSystemResultID,
           src: blobPhoto.url,
         };
+        // console.log(`out payloadPhoto: ${payloadPhoto}`);
         photosPayload.push(payloadPhoto);
       } else {
+        // console.log('deleting:');
         deletePhotos.push(filename);
       }
+      // console.log('done1:');
     }
-    const deleteResult = await deleteBlobFile(encounterId, deletePhotos);
+    if (deletePhotos.length > 0) {
+      deleteResult = await deleteBlobFile(encounterId, deletePhotos);
+    }
+    // console.log(`delete results: ${deleteResult}`);
     const photosResults = await Photo.bulkCreate(photosPayload);
     const newBoundingBox = await BoundingBox.bulkCreate(boundingBoxPayload);
+    // console.log('done');
     return successResponse(req, res, {
       firstSystemResultsRes, newBoundingBox, photosResults, deleteResult,
     });

@@ -7,6 +7,8 @@ import * as identifiedEncounterController from '../controllers/encounter/identif
 import * as siteController from '../controllers/site/site.controller';
 import * as azurePhotoController from '../controllers/photo/azurephoto.controller';
 import * as azureVideoController from '../controllers/video/azurevideo.controller';
+import * as photoController from '../controllers/photo/photo.controller';
+import * as firstSystemResults from '../controllers/systemResults/firstSystemResults.controller';
 
 const router = express.Router();
 
@@ -41,5 +43,16 @@ router.get('/getAllIsraeliSites', siteController.getAllIsraeliSites);
 
 router.post('/uploadrawphoto', singleFileUpload.single('image'), azurePhotoController.rawImageUpload);
 router.post('/uploadVideo', singleFileUpload.single('video'), azureVideoController.videoUpload);
+
+router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
+router.delete('/deletephotofromBlob', azurePhotoController.imageDelete);
+
+router.post('/addPhoto', photoController.addPhoto);
+router.get('/getAllPhotos', photoController.getAllPhotos);
+router.get('/getEncounterPhotos', photoController.getEncounterPhotos);
+router.get('/getIdntEncounterPhotos', photoController.getIdntEncounterPhotos);
+
+router.post('/addEncounterFirstSystemResults', firstSystemResults.addEncounterFirstSystemResults);
+
 
 module.exports = router;

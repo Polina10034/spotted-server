@@ -63,7 +63,6 @@ router.delete('/deletePhoto', photoController.deletePhoto);
 
 router.get('/getAllIsraeliSites', siteController.getAllIsraeliSites);
 router.get('/getLifeStages', lifeStageController.getAllLifeStage);
-router.get('/getMediaTypes', lifeStageController.getMediaTypes);
 
 router.post('/addVideo', videoController.addVideo);
 // router.get('/getAllVideos', videoController.getAllVideos);

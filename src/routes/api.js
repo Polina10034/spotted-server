@@ -32,12 +32,14 @@ router.post(
 
 router.get('/getAllEncounters', encounterController.getAllEncounters);
 router.get('/getEncounter', encounterController.getEncounter);
+router.post('/getAllUserEncounters', encounterController.getUserEncounters);
 router.post('/addEncounter', encounterController.addEncounter);
 router.put('/updateEncounter', encounterController.updateEncounter);
 router.delete('/deleteEncounter', encounterController.deleteEncounter);
 
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
 router.post('/uploadrawphoto', singleFileUpload.single('image'), azurePhotoController.rawImageUpload);
+router.delete('/deletephotofromBlob', azurePhotoController.imageDelete);
 
 router.get('/getAllIdentifiedEncounters', identifiedEncounterController.getAllIdentifiedEncounters);
 router.get('/getIdentifiedEncounter', identifiedEncounterController.getIdentifiedEncounter);
@@ -48,6 +50,7 @@ router.post('/addIdentifiedEncounter', identifiedEncounterController.addIdentifi
 
 router.post('/addBoundingBox', boundingBoxController.addBoundingBox);
 router.get('/getBoundingBox', boundingBoxController.getBoundingBox);
+router.get('/getPhotosBoundingBoxes', boundingBoxController.getPhotosBoundingBoxes);
 
 router.post('/addPhoto', photoController.addPhoto);
 router.get('/getAllPhotos', photoController.getAllPhotos);

@@ -120,3 +120,57 @@ export const deletePhoto = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+// export const addPhotos = async (req, res) => {
+//   let newRow = {};
+//   const photosData = [];
+
+//   try {
+//     // const { encounterId } = req.body;
+//     const { photos } = req.body;
+//     const boundingBoxPayload = [];
+//     const lenght = photos.length;
+
+//     for (let i = 0; i < lenght; i += 1) {
+//       const { data, counts, filename } = photos[i];
+
+//       let payload = {};
+//       payload = {
+//         EncounterID: req.body.EncounterID,
+//         CountPerImage: req.body.CountPerImage,
+//         UploadDate: req.body.UploadDate,
+//         RightSide: req.body.RightSide,
+//         LeftSide: req.body.LeftSide,
+//         FrontSide: req.body.FrontSide,
+//         TopSide: req.body.TopSide,
+//         FirstSystemResultID: req.body.FirstSystemResultID,
+//         SecoundSystemResultID: req.body.SecoundSystemResultID,
+//         // EncounterGroupID: req.body.EncounterGroupID,
+//         PathPhoto: req.body.PathPhoto,
+//       };
+
+//       newRow = await FirstSystemResult.create(payload);
+//       photosData.push(newRow);
+//       if (data !== undefined && newRow.FirstSystemResultID) {
+//         let j = 0;
+//         while (data[j] !== undefined) {
+//           const payloadbox = {
+//             Confidence: data[j][0].confidences,
+//             FirstSystemResultID: newRow.FirstSystemResultID,
+//             PhotoID: filename,
+//             Left_x: data[j][0].x,
+//             Top_y: data[j][0].y,
+//             Width: data[j][0].w,
+//             Height: data[j][0].h,
+//           };
+//           boundingBoxPayload.push(payloadbox);
+//           j += 1;
+//         }
+//       }
+//     }
+//     const newBoundingBox = await BoundingBox.bulkCreate(boundingBoxPayload);
+//     return successResponse(req, res, { firstSystemResultsRes: photosData, newBoundingBox });
+//   } catch (error) {
+//     return errorResponse(req, res, error.message);
+//   }
+// };

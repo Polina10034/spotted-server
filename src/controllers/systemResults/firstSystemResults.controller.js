@@ -1,6 +1,8 @@
 /* eslint-disable no-await-in-loop */
-import { FirstSystemResult, BoundingBox } from '../../models';
+import { FirstSystemResult, BoundingBox, Photo } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
+
+const { deleteBlobFile } = require('../../config/azurecontainer');
 
 export const addFirstSystemResult = async (req, res) => {
   try {
@@ -39,13 +41,17 @@ export const addFirstSystemResult = async (req, res) => {
 export const addEncounterFirstSystemResults = async (req, res) => {
   let newRow = {};
   const firstSystemResultsRes = [];
+  console.log(req.body);
 
   try {
     const { encounterId } = req.body;
     const { results } = req.body;
+    const { photosBlobData } = req.body;
     const boundingBoxPayload = [];
+    const photosPayload = [];
+    console.log(photosBlobData);
     const lenght = results.length;
-
+    const deletePhotos = [];
     for (let i = 0; i < lenght; i += 1) {
       const { data, counts, filename } = results[i];
 
@@ -60,6 +66,7 @@ export const addEncounterFirstSystemResults = async (req, res) => {
       newRow = await FirstSystemResult.create(payload);
       firstSystemResultsRes.push(newRow);
       if (data !== undefined && newRow.FirstSystemResultID) {
+        const blobPhoto = photosBlobData.find(item => item.filename === filename);
         let j = 0;
         while (data[j] !== undefined) {
           const payloadbox = {
@@ -74,10 +81,27 @@ export const addEncounterFirstSystemResults = async (req, res) => {
           boundingBoxPayload.push(payloadbox);
           j += 1;
         }
+        const payloadPhoto = {
+          EncounterID: encounterId,
+          CountPerImage: counts,
+          RightSide: false,
+          LeftSide: false,
+          FrontSide: false,
+          TopSide: false,
+          FirstSystemResultID: newRow.FirstSystemResultID,
+          src: blobPhoto.url,
+        };
+        photosPayload.push(payloadPhoto);
+      } else {
+        deletePhotos.push(filename);
       }
     }
+    const deleteResult = await deleteBlobFile(encounterId, deletePhotos);
+    const photosResults = await Photo.bulkCreate(photosPayload);
     const newBoundingBox = await BoundingBox.bulkCreate(boundingBoxPayload);
-    return successResponse(req, res, { firstSystemResultsRes, newBoundingBox });
+    return successResponse(req, res, {
+      firstSystemResultsRes, newBoundingBox, photosResults, deleteResult,
+    });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }

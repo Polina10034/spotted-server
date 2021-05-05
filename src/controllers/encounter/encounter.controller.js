@@ -14,22 +14,37 @@ export const getAllEncounters = async (req, res) => {
   }
 };
 
+export const getUserEncounters = async (req, res) => {
+  console.log(req.body);
+  const { id } = req.body;
+  try {
+    const encounters = await Encounter.findAndCountAll({
+      where: { ReportedBy: id },
+      order: [['CreatedAt', 'DESC']],
+    });
+    return successResponse(req, res, { encounters });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
 export const addEncounter = async (req, res) => {
   try {
     const {
       EncounterDate, SiteID, Email, SpottedCountReported, IsPregnant, Gender,
     } = req.body;
     let payload = {};
+    console.log(req.user);
     if (req.user) {
-      const { userId } = req.user;
+      const { id, email } = req.user;
       payload = {
         EncounterDate,
-        ReporterEmail: Email,
+        ReporterEmail: email,
         SiteID,
         SpottedCountReported,
         Verified: false,
         MediaType: 1,
-        ReportedBy: userId,
+        ReportedBy: id,
         Gender,
         IsPregnant: IsPregnant === 'Yes' ? 1 : 0,
       };
@@ -73,9 +88,13 @@ export const updateEncounter = async (req, res) => {
         ReporterEmail: req.body.ReporterEmail,
         SiteID: req.body.SiteID,
         SpottedCountReported: req.body.SpottedCountReported,
+        SpottedCount: req.body.SpottedCount,
         Verified: req.body.Verified === 'yes' ? 1 : 0,
         MediaType: req.body.MediaType,
-        ProfilePicture: req.body.url,
+        ProfilePicture: req.body.ProfilePicture,
+        OriginalID: req.body.OriginalID,
+        IsPregnant: req.body.IsPregnant === 'yes' ? 1 : 0,
+        Gender: req.body.Gender,
       }, { where: { EncounterID: id } });
     return successResponse(req, res, {});
   } catch (error) {

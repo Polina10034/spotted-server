@@ -38,20 +38,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         field: 'PathPhoto',
       },
+      IdentifiedEncounterID: {
+        type: DataTypes.INTEGER,
+      },
       CreatedAt: {
-        type: DataTypes.NOW,
-        default: new Date().getTime(),
+        type: DataTypes.DATE,
       },
       UpdatedAt: {
         type: DataTypes.DATE,
       },
     }, {
       timestamps: false,
-    },
+      hasTrigger: true,
 
+    },
   );
-    // Photo.associate = function (models) {
-    //   // associations can be defined here
-    // };
+
   return Photo;
 };

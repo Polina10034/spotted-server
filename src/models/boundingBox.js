@@ -32,6 +32,13 @@ module.exports = (sequelize, DataTypes) => {
       },
     }, {
       timestamps: false,
+      classMethods: {
+        associate(models) {
+          BoundingBox.belongsTo(models.Photos, { targetKey: 'PhotoID', foreignKey: 'PhotoID' });
+
+          // BoundingBox.belongsTo(models.photos, { as: 'boundingBox', foreignKey: 'PhotoID' });
+        },
+      },
     },
 
   );

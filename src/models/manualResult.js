@@ -5,26 +5,31 @@ module.exports = (sequelize, DataTypes) => {
       ManualResultID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false,
+        autoIncrement: true,
+      },
+      PhotoPath: {
+        type: DataTypes.STRING,
       },
       EncounterID: {
         type: DataTypes.INTEGER,
       },
-      RecognizedID: {
+      IndividualID: {
         type: DataTypes.INTEGER,
       },
-      IdentifiedID: {
+      VerfiedBy: {
         type: DataTypes.INTEGER,
       },
-      ClassificationApprovedID: {
-        type: DataTypes.INTEGER,
+      CreatedAt: {
+        type: DataTypes.DATE,
       },
-      // createdAt: {
-      //   type: DataTypes.DATE,
-      // },
-      // updatedAt: {
-      //   type: DataTypes.DATE,
-      // }
+      UpdatedAt: {
+        type: DataTypes.DATE,
+      },
+    },
+    {
+      timestamps: false,
+      hasTrigger: true,
+
     },
 
   );

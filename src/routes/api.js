@@ -12,6 +12,8 @@ import * as videoController from '../controllers/video/video.controller';
 import * as azureVideoController from '../controllers/video/azurevideo.controller';
 import * as firstSystemResults from '../controllers/systemResults/firstSystemResults.controller';
 import * as lifeStageController from '../controllers/encounter/lifeStage.controller';
+import * as SecondSystemResults from '../controllers/systemResults/secondSystemResults.controller';
+import * as ManualResult from '../controllers/systemResults/manualResults.controller';
 
 const multer = require('multer');
 
@@ -46,16 +48,19 @@ router.get('/getIdentifiedEncounter', identifiedEncounterController.getIdentifie
 router.put('/updateIdentifiedEncounter', identifiedEncounterController.updateIdentifiedEncounter);
 router.delete('/deleteIdentifiedEncounter', identifiedEncounterController.deleteIdentifiedEncounter);
 router.post('/addIdentifiedEncounter', identifiedEncounterController.addIdentifiedEncounter);
+router.post('/getIdntEncountersProfilePics', identifiedEncounterController.getIdntEncounterPhotos);
 
 
 router.post('/addBoundingBox', boundingBoxController.addBoundingBox);
 router.get('/getBoundingBox', boundingBoxController.getBoundingBox);
-router.get('/getPhotosBoundingBoxes', boundingBoxController.getPhotosBoundingBoxes);
+router.post('/getPhotosBoundingBoxes', boundingBoxController.getPhotosBoundingBoxes);
 
 router.post('/addPhoto', photoController.addPhoto);
 router.get('/getAllPhotos', photoController.getAllPhotos);
 router.get('/getEncounterPhotos', photoController.getEncounterPhotos);
 router.get('/getIdntEncounterPhotos', photoController.getIdntEncounterPhotos);
+router.put('/updateDBphoto', photoController.updateDBidentPhoto);
+
 
 router.get('/getPhoto', photoController.getPhoto);
 router.put('/updatePhoto', photoController.updatePhoto);
@@ -81,5 +86,13 @@ router.get('/getAllFirstSystemResult', firstSystemResults.getAllFirstSystemResul
 router.get('/getEncounterFirstSystemResult', firstSystemResults.getEncounterFirstSystemResults);
 
 router.post('/addEncounterFirstSystemResults', firstSystemResults.addEncounterFirstSystemResults);
+
+router.post('/addSecondSystemResults', SecondSystemResults.addSecondSystemResults);
+router.post('/addManualResult', ManualResult.addManualResult);
+
+router.post('/addSecondSystemResult', SecondSystemResults.addSecondSystemResult);
+router.get('/getSecondSystemResult', firstSystemResults.getFirstSystemResult);
+router.get('/getAllSecondSystemResult', firstSystemResults.getAllFirstSystemResult);
+router.get('/getEncounterSecondSystemResult', firstSystemResults.getEncounterFirstSystemResults);
 
 module.exports = router;

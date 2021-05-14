@@ -101,3 +101,13 @@ export const deleteIdentifiedEncounter = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+export const getIdntEncounterPhotos = async (req, res) => {
+  try {
+    const { individualids } = req.body;
+    const identEncounters = await IdentifiedEncounter.findAll({ where: { IdentifiedEncounterID: individualids } });
+    return successResponse(req, res, { identEncounters });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};

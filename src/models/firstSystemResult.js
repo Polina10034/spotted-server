@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false, // TODO remove & test
+      hasTrigger: true,
     },
   );
     // FirstSystemResult.associate = function (models) {

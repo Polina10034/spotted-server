@@ -5,17 +5,25 @@ module.exports = (sequelize, DataTypes) => {
       SecoundSystemResultID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false,
+        autoIncrement: true,
       },
-      PhotoID: {
-        type: DataTypes.INTEGER,
+      PhotoPath: {
+        type: DataTypes.STRING,
       },
       IsRecognized: {
         type: DataTypes.BOOLEAN,
       },
-      NumName: {
-        type: DataTypes.INTEGER,
+      Results: {
+        type: DataTypes.STRING,
       },
+      CreatedAt: {
+        type: DataTypes.DATE,
+      },
+    },
+    {
+      timestamps: false,
+      hasTrigger: true,
+
     },
 
   );

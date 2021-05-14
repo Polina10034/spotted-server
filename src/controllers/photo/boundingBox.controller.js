@@ -37,7 +37,7 @@ export const getBoundingBox = async (req, res) => {
 export const getPhotosBoundingBoxes = async (req, res) => {
   try {
     const { photosId } = req.body;
-    console.log(photosId);
+    // console.log(photosId);
     // const lenght = photosId.length;
     // for (let i = 0; i < lenght; i += 1) {
     //   const boundingBox = await BoundingBox.findOne({ where: { BoundingBoxID: boundingBoxId } });
@@ -49,3 +49,14 @@ export const getPhotosBoundingBoxes = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+// export const getPhotosandBoundingBox = async (req, res) => {
+//   try {
+//     const { boundingBoxId } = req.body;
+//     const boundingBox = await BoundingBox.findAll({
+//       where: { BoundingBoxID: boundingBoxId } });
+//     return successResponse(req, res, { boundingBox });
+//   } catch (error) {
+//     return errorResponse(req, res, error.message);
+//   }
+// };

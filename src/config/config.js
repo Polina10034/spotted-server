@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const x = {
   development: {
+    server: process.env.DB_SERVER,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
@@ -14,6 +15,7 @@ const x = {
     },
   },
   test: {
+    server: process.env.DB_SERVER,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
@@ -26,6 +28,7 @@ const x = {
     },
   },
   production: {
+    server: process.env.DB_SERVER,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,

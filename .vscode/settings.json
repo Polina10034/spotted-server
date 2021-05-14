@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/422dbf2a-7432-4c0b-8116-bd958803112f/resourceGroups/spotted-server/providers/Microsoft.Web/sites/spotted-server",
+    "appService.deploySubpath": "."
+}

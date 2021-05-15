@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-console.log(`hereee${process.env.DB_NAME}`);
+console.log(`ENV: ${process.env.NODE_ENV}`);
 
 
 const sequelize = new Sequelize(

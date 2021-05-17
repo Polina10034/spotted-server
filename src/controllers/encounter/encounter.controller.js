@@ -15,8 +15,7 @@ export const getAllEncounters = async (req, res) => {
 };
 
 export const getUserEncounters = async (req, res) => {
-  console.log(req.body);
-  const { id } = req.body;
+  const { id } = req.user;
   try {
     const encounters = await Encounter.findAndCountAll({
       where: { ReportedBy: id },

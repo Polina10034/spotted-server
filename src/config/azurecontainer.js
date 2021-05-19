@@ -66,6 +66,27 @@ const uploadRawFileToBlob = async (directoryPath, file) => new Promise((resolve,
   });
 });
 
+const CopyBlobFiles = async (directoryPath, urlArr) => new Promise((resolve, reject) => {
+  const lenght = urlArr.length;
+  const results = [];
+  for (let i = 0; i < lenght; i += 1) {
+    const url = urlArr[i];
+    const urlSplit = (url).split('/');
+    const blobService = azureStorage.createBlobService(azureStorageConfig.accountName, azureStorageConfig.accountKey);
+    blobService.startCopyBlob(url, azureStorageConfig.containerName, `${directoryPath}/${urlSplit[5]}`, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        results.push({
+          filename: urlSplit[5],
+          url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}`,
+        });
+        resolve(`Successfully Copied: ${JSON.stringify(result)}`);
+      }
+    });
+  }
+});
+
 const deleteBlobFile = async (directoryPath, files) => new Promise((resolve, reject) => {
   const lenght = files.length;
   const results = [];
@@ -83,23 +104,10 @@ const deleteBlobFile = async (directoryPath, files) => new Promise((resolve, rej
   }
 });
 
-//   createBlockBlobFromStream(azureStorageConfig.containerName, `${directoryPath}/${blobName}`, stream, streamLength, (err) => {
-//     if (err) {
-//       reject(err);
-//     } else {
-//       resolve({
-//         filename: blobName,
-//         originalname: file.originalname,
-//         size: streamLength,
-//         path: `${azureStorageConfig.containerName}/${directoryPath}/${blobName}`,
-//         url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${blobName}`,
-//       });
-//     }
-//   });
-// });
 
 module.exports = {
   uploadFileToBlob,
   uploadRawFileToBlob,
+  CopyBlobFiles,
   deleteBlobFile,
 };

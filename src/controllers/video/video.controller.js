@@ -19,14 +19,13 @@ const { Op } = Sequelize;
 export const getEncounterVideos = async (req, res) => {
   try {
     const { id } = req.query;
-    const videos = await video.findAll({
+    const videos = await Video.findAll({
       where: {
         EncounterID: id,
-        PathVideo: {
-          [Op.not]: null, // Like: sellDate IS NOT NULL
+        VideoPath: {
+          [Op.not]: null,
         },
       },
-      attributes: ['src'],
     });
     return successResponse(req, res, { videos });
   } catch (error) {
@@ -40,8 +39,8 @@ export const getIdntEncounterVideos = async (req, res) => {
     const { id } = req.query;
     const videos = await Video.findAll({
       where: {
-        IdentifiedID: id,
-        PathVideo: {
+        EncounterID: id,
+        VideoPath: {
           [Op.not]: null, // Like: sellDate IS NOT NULL
         },
       },
@@ -56,14 +55,12 @@ export const getIdntEncounterVideos = async (req, res) => {
 export const addVideo = async (req, res) => {
   try {
     const {
-      id, count, url, title
+      id, fileName,
     } = req.body;
     let payload = {};
     payload = {
       EncounterID: id,
-      CountPerImage: count,
-      Title: title,
-      VideoPath: url,
+      VideoPath: `${process.env.AZURE_STORAGE_URL}/video/${fileName}`,
     };
     const newVideo = await Video.create(payload);
     return successResponse(req, res, { newVideo });
@@ -71,8 +68,6 @@ export const addVideo = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
-
-
 
 // export const getPhoto = async (req, res) => {
 //   try {
@@ -108,13 +103,13 @@ export const addVideo = async (req, res) => {
 //   }
 // };
 
-// export const deletePhoto = async (req, res) => {
-//   try {
-//     const { id } = req.query;
-//     const photo = await Photo.findOne({ where: { PhotoID: id } });
-//     await photo.destroy();
-//     return successResponse(req, res, { photo });
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
+export const deleteVideo = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const status = await Video.findOne({ where: { VideoID: id } });
+    await status.destroy();
+    return successResponse(req, res, { status });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};

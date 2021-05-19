@@ -9,6 +9,7 @@ import * as azurePhotoController from '../controllers/photo/azurephoto.controlle
 import * as azureVideoController from '../controllers/video/azurevideo.controller';
 import * as photoController from '../controllers/photo/photo.controller';
 import * as firstSystemResults from '../controllers/systemResults/firstSystemResults.controller';
+import * as videoController from '../controllers/video/video.controller';
 
 const router = express.Router();
 
@@ -53,6 +54,9 @@ router.get('/getEncounterPhotos', photoController.getEncounterPhotos);
 router.get('/getIdntEncounterPhotos', photoController.getIdntEncounterPhotos);
 
 router.post('/addEncounterFirstSystemResults', firstSystemResults.addEncounterFirstSystemResults);
+router.post('/addVideoFirstSystemResults', firstSystemResults.addVideoFirstSystemResults);
+
+router.post('/addVideo', videoController.addVideo);
 
 
 module.exports = router;

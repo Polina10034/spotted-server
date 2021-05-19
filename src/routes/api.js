@@ -32,6 +32,8 @@ router.post(
   userController.changePassword,
 );
 
+router.put('/user', userController.getUser);
+
 router.get('/getAllEncounters', encounterController.getAllEncounters);
 router.get('/getEncounter', encounterController.getEncounter);
 router.post('/getAllUserEncounters', encounterController.getUserEncounters);
@@ -42,6 +44,7 @@ router.delete('/deleteEncounter', encounterController.deleteEncounter);
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
 router.post('/uploadrawphoto', singleFileUpload.single('image'), azurePhotoController.rawImageUpload);
 router.delete('/deletephotofromBlob', azurePhotoController.imageDelete);
+router.post('/rawImageBlobCopy', azurePhotoController.rawImageCopy);
 
 router.get('/getAllIdentifiedEncounters', identifiedEncounterController.getAllIdentifiedEncounters);
 router.get('/getIdentifiedEncounter', identifiedEncounterController.getIdentifiedEncounter);
@@ -70,13 +73,13 @@ router.get('/getAllIsraeliSites', siteController.getAllIsraeliSites);
 router.get('/getLifeStages', lifeStageController.getAllLifeStage);
 
 router.post('/addVideo', videoController.addVideo);
+router.delete('/deleteVideo', videoController.deleteVideo);
 // router.get('/getAllVideos', videoController.getAllVideos);
 router.get('/getEncounterVideos', videoController.getEncounterVideos);
 router.get('/getIdntEncounterVideos', videoController.getIdntEncounterVideos);
 
 // router.get('/getVideo', videoController.getVideo);
 // router.put('/updateVideo', videoController.updateVideo);
-// router.delete('/deleteVideo', videoController.deleteVideo);
 
 router.post('/uploadVideo', singleFileUpload.single('video'), azureVideoController.videoUpload);
 
@@ -86,6 +89,7 @@ router.get('/getAllFirstSystemResult', firstSystemResults.getAllFirstSystemResul
 router.get('/getEncounterFirstSystemResult', firstSystemResults.getEncounterFirstSystemResults);
 
 router.post('/addEncounterFirstSystemResults', firstSystemResults.addEncounterFirstSystemResults);
+router.post('/addVideoFirstSystemResults', firstSystemResults.addVideoFirstSystemResults);
 
 router.post('/addSecondSystemResults', SecondSystemResults.addSecondSystemResults);
 router.post('/addManualResult', ManualResult.addManualResult);

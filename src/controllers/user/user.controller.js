@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import axios from 'axios';
 import { User } from '../../models';
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 
@@ -19,6 +18,17 @@ export const allUsers = async (req, res) => {
   }
 };
 
+export const getUser = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const user = await User.findOne({
+      where: { id },
+    });
+    return successResponse(req, res, { user });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 export const register = async (req, res) => {
   try {
     const {
@@ -46,7 +56,7 @@ export const register = async (req, res) => {
 
     const newUser = await User.create(payload);
     newUser.password = undefined;
-    return successResponse(req, res, {newUser});
+    return successResponse(req, res, { newUser });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }

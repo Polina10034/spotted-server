@@ -6,14 +6,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
       },
       EncounterID: {
-        type: DataTypes.INTEGER,
-      },
-      Title: {
-        type: DataTypes.STRING,
-      },
-      CountPerImage: {
         type: DataTypes.INTEGER,
       },
       VideoPath: {
@@ -26,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
     },
+    {
+      timestamps: false,
+    },
 
   );
-    // Video.associate = function (models) {
-    //   // associations can be defined here
-    // };
   return Video;
 };

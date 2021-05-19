@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
-const { uploadFileToBlob, uploadRawFileToBlob, deleteBlobFile } = require('../../config/azurecontainer');
+const {
+  uploadFileToBlob, uploadRawFileToBlob, CopyBlobFiles, deleteBlobFile,
+} = require('../../config/azurecontainer');
 
 module.exports = {
 
@@ -15,7 +17,6 @@ module.exports = {
   },
 
   async imageDelete(req, res, next) {
-    console.log(req.body);
     try {
       const { encounterId } = req.body;
       const { files } = req.body;
@@ -33,6 +34,17 @@ module.exports = {
       const encounterId = req.query.id;
       const image = await uploadRawFileToBlob(encounterId, req.file); // encounterId is a directory in the Azure container for encounter images
       return res.json(image);
+    } catch (error) {
+      next(error);
+      return error;
+    }
+  },
+
+  async rawImageCopy(req, res, next) {
+    try {
+      const encounterId = req.query.id;
+      const status = await CopyBlobFiles(encounterId, req.urlArr); // encounterId is a directory in the Azure container for encounter images
+      return res.json(status);
     } catch (error) {
       next(error);
       return error;

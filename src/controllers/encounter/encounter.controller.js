@@ -33,7 +33,6 @@ export const addEncounter = async (req, res) => {
       EncounterDate, SiteID, Email, SpottedCountReported, IsPregnant, Gender,
     } = req.body;
     let payload = {};
-    console.log(req.user);
     if (req.user) {
       const { id, email } = req.user;
       payload = {

@@ -93,6 +93,7 @@ export const updateEncounter = async (req, res) => {
         OriginalID: req.body.OriginalID,
         IsPregnant: req.body.IsPregnant === 'yes' ? 1 : 0,
         Gender: req.body.Gender,
+        UpdatedBy: req.user ? req.user.id : null,
       }, { where: { EncounterID: id } });
     return successResponse(req, res, {});
   } catch (error) {

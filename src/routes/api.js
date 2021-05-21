@@ -36,7 +36,7 @@ router.put('/user', userController.getUser);
 
 router.get('/getAllEncounters', encounterController.getAllEncounters);
 router.get('/getEncounter', encounterController.getEncounter);
-router.post('/getAllUserEncounters', encounterController.getUserEncounters);
+router.get('/getAllUserEncounters', encounterController.getUserEncounters);
 router.post('/addEncounter', encounterController.addEncounter);
 router.put('/updateEncounter', encounterController.updateEncounter);
 router.delete('/deleteEncounter', encounterController.deleteEncounter);
@@ -68,9 +68,12 @@ router.put('/updateDBphoto', photoController.updateDBidentPhoto);
 router.get('/getPhoto', photoController.getPhoto);
 router.put('/updatePhoto', photoController.updatePhoto);
 router.delete('/deletePhoto', photoController.deletePhoto);
+router.put('/updatePhotoSide', photoController.updatePhotoSide);
+
 
 router.get('/getAllIsraeliSites', siteController.getAllIsraeliSites);
 router.get('/getLifeStages', lifeStageController.getAllLifeStage);
+router.get('/getMediaTypes', lifeStageController.getMediaTypes);
 
 router.post('/addVideo', videoController.addVideo);
 router.delete('/deleteVideo', videoController.deleteVideo);

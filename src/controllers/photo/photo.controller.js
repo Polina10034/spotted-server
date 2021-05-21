@@ -26,7 +26,16 @@ export const getEncounterPhotos = async (req, res) => {
           [Op.not]: null, // Like: sellDate IS NOT NULL
         },
       },
-      attributes: ['src', 'PhotoID', 'FirstSystemResultID'],
+      attributes: [
+        'src',
+        'PhotoID',
+        'FirstSystemResultID',
+        'LeftSide',
+        'RightSide',
+        'FrontSide',
+        'TopSide',
+        // 'BackSide',
+      ],
     });
     return successResponse(req, res, { photos });
   } catch (error) {
@@ -53,29 +62,28 @@ export const getIdntEncounterPhotos = async (req, res) => {
   }
 };
 
-// export const updateDBphoto = async (req, res) => {
-//   try {
-//     const { id, src } = req.body;
-//     // const encounter = await Encounter.findOne({ where: { EncounterID: id } });
-//     await Photo
-//       .update({
-//         EncounterDate: req.body.EncounterDate,
-//         ReporterEmail: req.body.ReporterEmail,
-//         SiteID: req.body.SiteID,
-//         SpottedCountReported: req.body.SpottedCountReported,
-//         SpottedCount: req.body.SpottedCount,
-//         Verified: req.body.Verified === 'yes' ? 1 : 0,
-//         MediaType: req.body.MediaType,
-//         ProfilePicture: req.body.ProfilePicture,
-//         OriginalID: req.body.OriginalID,
-//         IsPregnant: req.body.IsPregnant === 'yes' ? 1 : 0,
-//         Gender: req.body.Gender,
-//       }, { where: { EncounterID: id } });
-//     return successResponse(req, res, {});
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
+export const updatePhotoSide = async (req, res) => {
+  try {
+    const { src } = req.body;
+    const updateStatus = await Photo
+      .update({
+        EncounterID: req.body.EncounterID,
+        CountPerImage: req.body.CountPerImage,
+        UploadDate: req.body.UploadDate,
+        RightSide: req.body.RightSide,
+        LeftSide: req.body.LeftSide,
+        FrontSide: req.body.FrontSide,
+        TopSide: req.body.TopSide,
+        FirstSystemResultID: req.body.FirstSystemResultID,
+        SecoundSystemResultID: req.body.SecoundSystemResultID,
+        EncounterGroupID: req.body.EncounterGroupID,
+        // PathPhoto: req.body.PathPhoto,
+      }, { where: { PathPhoto: src } });
+    return successResponse(req, res, { updateStatus });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 export const addPhoto = async (req, res) => {
   try {
     const {

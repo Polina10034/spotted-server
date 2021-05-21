@@ -34,6 +34,7 @@ router.post(
 router.get('/getAllEncounters', encounterController.getAllEncounters);
 router.post('/addEncounter', encounterController.addEncounter);
 router.get('/getEncounter', encounterController.getEncounter);
+router.put('/updateEncounter', encounterController.updateEncounter);
 
 router.get('/getAllIdentifiedEncounters', identifiedEncounterController.getAllIdentifiedEncounters);
 router.post('/addIdentifiedEncounter', identifiedEncounterController.addIdentifiedEncounter);

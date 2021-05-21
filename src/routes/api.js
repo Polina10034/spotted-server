@@ -35,11 +35,14 @@ router.post(
 router.put('/user', userController.getUser);
 
 router.get('/getAllEncounters', encounterController.getAllEncounters);
+router.get('/getActiveEncounters', encounterController.getActiveEncounters);
 router.get('/getEncounter', encounterController.getEncounter);
 router.get('/getAllUserEncounters', encounterController.getUserEncounters);
 router.post('/addEncounter', encounterController.addEncounter);
 router.put('/updateEncounter', encounterController.updateEncounter);
 router.delete('/deleteEncounter', encounterController.deleteEncounter);
+router.put('/updateEncounterIsActive', encounterController.updateEncounterIsActive);
+
 
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
 router.post('/uploadrawphoto', singleFileUpload.single('image'), azurePhotoController.rawImageUpload);

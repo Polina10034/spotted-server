@@ -3,10 +3,17 @@ import { successResponse, errorResponse } from '../../helpers';
 
 export const getAllEncounters = async (req, res) => {
   try {
+    const encounters = await Encounter.findAndCountAll({});
+    return successResponse(req, res, { encounters });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+export const getActiveEncounters = async (req, res) => {
+  try {
     const encounters = await Encounter.findAndCountAll({
-      order: [['CreatedAt', 'DESC']],
-    //   offset: (page - 1) * limit,
-    //   limit,
+      where: { IsActive: true },
     });
     return successResponse(req, res, { encounters });
   } catch (error) {
@@ -75,7 +82,19 @@ export const getEncounter = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
-
+export const updateEncounterIsActive = async (req, res) => {
+  try {
+    const { id, isActive } = req.body;
+    // const encounter = await Encounter.findOne({ where: { EncounterID: id } });
+    await Encounter
+      .update({
+        IsActive: isActive,
+      }, { where: { EncounterID: id } });
+    return successResponse(req, res, {});
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 export const updateEncounter = async (req, res) => {
   try {
     const { id } = req.query;

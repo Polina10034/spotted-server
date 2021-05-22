@@ -17,7 +17,7 @@ export const getAllIdentifiedEncounters = async (req, res) => {
 export const addIdentifiedEncounter = async (req, res) => {
   try {
     const {
-      Photographer, ReportTypeID, EncounterID, LifeStageID, TL, DL, DW, MaxDepth, Distance, Temp, Description, Comments, Link, Sex, isAlive, ProfilePicture,
+      Photographer, ReportTypeID, EncounterID, LifeStageID, TL, DL, DW, MaxDepth, Distance, Temp, Description, Link, Sex, isAlive, ProfilePicture,
     } = req.body;
     let payload = {};
     const { userId } = req.user;
@@ -35,7 +35,6 @@ export const addIdentifiedEncounter = async (req, res) => {
       Distance,
       Temp,
       Description,
-      Comments,
       Link,
       UpdateBy: userId,
       ProfilePicture,
@@ -79,7 +78,6 @@ export const updateIdentifiedEncounter = async (req, res) => {
         Distance: req.body.Distance,
         Temp: req.body.Temp,
         Description: req.body.Description,
-        Comments: req.body.Comments,
         SpeciesID: req.body.SpeciesID,
         Link: req.body.Link,
         UpdateBy: req.body.UpdateBy,

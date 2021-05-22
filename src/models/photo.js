@@ -25,9 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       TopSide: {
         type: DataTypes.BOOLEAN,
       },
-      // BackSide: {
-      //   type: DataTypes.BOOLEAN,
-      // },
       FirstSystemResultID: {
         type: DataTypes.INTEGER,
       },

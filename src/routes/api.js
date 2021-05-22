@@ -69,6 +69,7 @@ router.put('/updateDBphoto', photoController.updateDBidentPhoto);
 
 
 router.get('/getPhoto', photoController.getPhoto);
+router.put('/getPhotoByUrl', photoController.getPhotoByUrl);
 router.put('/updatePhoto', photoController.updatePhoto);
 router.delete('/deletePhoto', photoController.deletePhoto);
 router.put('/updatePhotoSide', photoController.updatePhotoSide);

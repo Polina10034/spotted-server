@@ -46,9 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       Description: {
         type: DataTypes.STRING,
       },
-      Comments: {
-        type: DataTypes.INTEGER,
-      },
       Link: {
         type: DataTypes.STRING,
       },

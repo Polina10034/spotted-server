@@ -107,6 +107,15 @@ export const addPhoto = async (req, res) => {
 };
 
 
+export const getPhotoByUrl = async (req, res) => {
+  try {
+    const { PhotoPath } = req.body;
+    const photo = await Photo.findOne({ where: { src: PhotoPath } });
+    return successResponse(req, res, { photo });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 export const getPhoto = async (req, res) => {
   try {
     const { photoId } = req.body;

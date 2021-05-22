@@ -32,7 +32,7 @@ export const getEncounterPhotos = async (req, res) => {
         'FirstSystemResultID',
         'LeftSide',
         'RightSide',
-        'FrontSide',
+        // 'FrontSide',
         'TopSide',
         // 'BackSide',
       ],

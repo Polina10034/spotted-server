@@ -59,6 +59,7 @@ router.post('/addEncounterFirstSystemResults', firstSystemResults.addEncounterFi
 router.post('/addVideoFirstSystemResults', firstSystemResults.addVideoFirstSystemResults);
 
 router.post('/addVideo', videoController.addVideo);
+router.get('/getEncounterVideos', videoController.getEncounterVideos);
 
 
 module.exports = router;

@@ -28,25 +28,29 @@ export const addSecondSystemResults = async (req, res) => {
   let photoResult = {};
   try {
     const { Results } = req.body;
-    console.log(Results);
-    const lenght = Results.length;
-    for (let i = 0; i < lenght; i += 1) {
-      const { individuals_ID, src } = Results[i];
+    console.log(Results.length);
+    const { length } = Results;
+    for (let i = 0; i < length; i += 1) {
+      const lenghtIn = Results[i].length;
 
-      const payload = {
-        PhotoPath: src,
-        IsRecognized: individuals_ID.length > 0 ? 1 : 0,
-        Results: individuals_ID.toString(),
-      };
-      newResult = await SecoundSystemResult.create(payload);
-      secondSystemResults.push(newResult);
+      for (let j = 0; j < lenghtIn; j += 1) {
+        const { individuals_ID, src } = Results[i][j];
 
-      if (newResult.SecoundSystemResultID) {
-        const photoPayload = {
-          SecoundSystemResultID: newResult.SecoundSystemResultID,
+        const payload = {
+          PhotoPath: src,
+          IsRecognized: individuals_ID.length > 0 ? 1 : 0,
+          Results: individuals_ID.toString(),
         };
-        photoResult = await Photo.update(photoPayload, { where: { PathPhoto: src } });
-        updatePhotosResults.push(photoResult);
+        newResult = await SecoundSystemResult.create(payload);
+        secondSystemResults.push(newResult);
+
+        if (newResult.SecoundSystemResultID) {
+          const photoPayload = {
+            SecoundSystemResultID: newResult.SecoundSystemResultID,
+          };
+          photoResult = await Photo.update(photoPayload, { where: { PathPhoto: src } });
+          updatePhotosResults.push(photoResult);
+        }
       }
     }
     return successResponse(req, res, { secondSystemResults, updatePhotosResults });

@@ -18,16 +18,18 @@ const { Op } = Sequelize;
 
 export const getEncounterVideos = async (req, res) => {
   try {
+    const limit = 1;
     const { id } = req.query;
-    const videos = await Video.findAll({
+    const video = await Video.findAll({
       where: {
         EncounterID: id,
         VideoPath: {
           [Op.not]: null,
         },
       },
+      limit,
     });
-    return successResponse(req, res, { videos });
+    return successResponse(req, res, { video });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }

@@ -51,6 +51,7 @@ export const addEncounter = async (req, res) => {
         MediaType: 1,
         ReportedBy: id,
         Gender,
+        ReportTypeID: 1,
         IsPregnant: IsPregnant === 'Yes' ? 1 : 0,
       };
     } else {
@@ -61,6 +62,7 @@ export const addEncounter = async (req, res) => {
         SpottedCountReported,
         Verified: false,
         MediaType: 1,
+        ReportTypeID: 1,
         Gender,
         IsPregnant: IsPregnant === 'Yes' ? 1 : 0,
       };
@@ -112,6 +114,7 @@ export const updateEncounter = async (req, res) => {
         OriginalID: req.body.OriginalID,
         IsPregnant: req.body.IsPregnant === 'yes' ? 1 : 0,
         Gender: req.body.Gender,
+        // ReportTypeID: req.body.ReportTypeID,
         UpdatedBy: req.user ? req.user.id : null,
       }, { where: { EncounterID: id } });
     return successResponse(req, res, {});

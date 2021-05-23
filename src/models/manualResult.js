@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       EncounterID: {
         type: DataTypes.INTEGER,
       },
-      IndividualID: {
+      IdentifiedEncounterID: {
         type: DataTypes.INTEGER,
       },
       VerfiedBy: {

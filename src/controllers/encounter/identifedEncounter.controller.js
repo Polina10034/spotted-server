@@ -17,13 +17,12 @@ export const getAllIdentifiedEncounters = async (req, res) => {
 export const addIdentifiedEncounter = async (req, res) => {
   try {
     const {
-      Photographer, ReportTypeID, EncounterID, LifeStageID, TL, DL, DW, MaxDepth, Distance, Temp, Description, Link, Sex, isAlive, ProfilePicture,
+      Photographer, EncounterID, LifeStageID, TL, DL, DW, MaxDepth, Distance, Temp, Description, Link, Sex, isAlive, ProfilePicture,
     } = req.body;
     let payload = {};
     const { userId } = req.user;
     payload = {
       Photographer,
-      ReportTypeID,
       LifeStageID,
       EncounterID,
       Sex,
@@ -68,7 +67,6 @@ export const updateIdentifiedEncounter = async (req, res) => {
       .update({
         Photographer: req.body.Photographer,
         LifeStageID: req.body.LifeStageID,
-        ReportTypeID: req.body.ReportTypeID,
         Sex: req.body.Sex,
         isAlive: req.body.isAlive === 'yes' ? 1 : 0,
         TL: req.body.TL,

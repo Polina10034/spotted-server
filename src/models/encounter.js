@@ -61,6 +61,9 @@ module.exports = (sequelize, DataTypes) => {
       Gender: {
         type: DataTypes.STRING,
       },
+      ReportTypeID: {
+        type: DataTypes.INTEGER,
+      },
     }, {
       timestamps: false, // TODO remove & test
       hasTrigger: true,

@@ -10,7 +10,7 @@ export const addManualResult = async (req, res) => {
     const { EncounterID, IndividualID, url } = req.body;
     payload = {
       EncounterID,
-      IndividualID,
+      IdentifiedEncounterID: IndividualID,
       VerfiedBy: userId,
       PhotoPath: url,
     };

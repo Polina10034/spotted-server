@@ -64,18 +64,17 @@ module.exports = (sequelize, DataTypes) => {
       ReportTypeID: {
         type: DataTypes.INTEGER,
       },
-    }, {
+    },
+    {
       timestamps: false, // TODO remove & test
       hasTrigger: true,
     },
 
   );
-    // Encounter.associate = function (models) {
-    //   Encounter.hasMany(models.Photo, {
-    //     foreignKey: {
-    //       name: 'EncounterID',
-    //       allowNull: false
-    //     }
-    //   })    };
+
+  Encounter.associate = (models) => {
+    Encounter.belongsTo(models.Site, { foreignKey: 'SiteID' });
+  };
+
   return Encounter;
 };

@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   );
-    // Site.associate = function (models) {
-    //   // associations can be defined here
-    // };
+  // Site.associate = (models) => {
+  //   //  Site.belongsTo(models.Encounter, { foreignKey: 'SiteID' });
+  // };
   return Site;
 };

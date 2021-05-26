@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       EncounterID: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
       },
       CountPerImage: {
         type: DataTypes.INTEGER,
@@ -48,11 +49,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
     }, {
+      // classMethods: {
+      //   associate(models) {
+      //     this.hasOne(models.Encounter, { foreignKey: 'EncounterID' });
+      //     // this.belongsTo(models.Encounter, { foreignKey: 'EncounterID' });
+      //     this.belongsTo(models.IdentifiedEncounterID, { foreignKey: 'IdentifiedEncounterID' });
+      //   },
+      // },
       timestamps: false,
       hasTrigger: true,
 
     },
   );
-
+  Photo.associate = (models) => {
+    Photo.belongsTo(models.Encounter, { foreignKey: 'EncounterID' });
+    // Photo.hasOne(models.Site, { foreignKey: 'EncounterID' });
+  };
   return Photo;
 };

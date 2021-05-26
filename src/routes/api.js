@@ -65,6 +65,7 @@ router.post('/addPhoto', photoController.addPhoto);
 router.get('/getAllPhotos', photoController.getAllPhotos);
 router.get('/getEncounterPhotos', photoController.getEncounterPhotos);
 router.get('/getIdntEncounterPhotos', photoController.getIdntEncounterPhotos);
+router.get('/getIdntEncounterPhotosSites', photoController.getIdntEncounterPhotosSites);
 router.put('/updateDBphoto', photoController.updateDBidentPhoto);
 
 

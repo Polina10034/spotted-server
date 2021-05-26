@@ -107,3 +107,15 @@ export const getIdntEncounterPhotos = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+// export const getIdentifiedEncounters = async (req, res) => {
+//   try {
+//     // const page = req.params.page || 1;
+//     const identifiedEncounters = await IdentifiedEncounter.findAndCountAll({
+//       order: [['UpdatedAt', 'DESC']],
+//     });
+//     return successResponse(req, res, { identifiedEncounters });
+//   } catch (error) {
+//     return errorResponse(req, res, error.message);
+//   }
+// };

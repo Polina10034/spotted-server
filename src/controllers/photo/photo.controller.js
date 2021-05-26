@@ -1,4 +1,4 @@
-import { Photo } from '../../models';
+import { Photo, Encounter, Site } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
 const Sequelize = require('sequelize');
@@ -62,6 +62,42 @@ export const getIdntEncounterPhotos = async (req, res) => {
   }
 };
 
+export const getIdntEncounterPhotosSites = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const photos = await Photo.findAll({
+      include: [
+        {
+          model: Encounter,
+          where: {
+            IsActive: true,
+            // PathPhoto: {
+            //   [Op.not]: null, // Like: sellDate IS NOT NULL
+            // },
+          },
+          attributes: ['SiteID', 'EncounterID', 'EncounterDate'],
+          include: {
+            model: Site,
+            // required: true
+          },
+
+        },
+
+      ],
+      where: {
+        IdentifiedEncounterID: id,
+        // EncounterID,
+        PathPhoto: {
+          [Op.not]: null, // Like: sellDate IS NOT NULL
+        },
+      },
+      attributes: ['src', 'IdentifiedEncounterID', 'EncounterID'],
+    });
+    return successResponse(req, res, { photos });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 export const updatePhotoSide = async (req, res) => {
   try {
     const { src } = req.body;

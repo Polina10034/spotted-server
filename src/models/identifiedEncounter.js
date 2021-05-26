@@ -60,6 +60,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
     }, {
+      classMethods: {
+        associate(models) {
+          this.hasMany(models.Photo, { foreignKey: 'IdentifiedEncounterID' });
+        },
+      },
       timestamps: false,
       hasTrigger: true,
 

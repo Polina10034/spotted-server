@@ -63,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       classMethods: {
         associate(models) {
           this.hasMany(models.Photo, { foreignKey: 'IdentifiedEncounterID' });
+          this.belongsTo(models.User, { foreignKey: 'UpdatedBy' });
         },
       },
       timestamps: false,
@@ -70,10 +71,9 @@ module.exports = (sequelize, DataTypes) => {
 
     },
 
-
   );
-    // IdentifiedEncounter.associate = function (models) {
-    //   // associations can be defined here
-    // };
+  IdentifiedEncounter.associate = (models) => {
+    IdentifiedEncounter.belongsTo(models.User, { foreignKey: 'UpdatedBy' });
+  };
   return IdentifiedEncounter;
 };

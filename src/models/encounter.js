@@ -74,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Encounter.associate = (models) => {
     Encounter.belongsTo(models.Site, { foreignKey: 'SiteID' });
+    Encounter.belongsTo(models.User, { foreignKey: 'ReportedBy' });
   };
 
   return Encounter;

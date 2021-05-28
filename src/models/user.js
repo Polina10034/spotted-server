@@ -43,8 +43,9 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   );
-  // User.associate = function (models) {
-  //   // associations can be defined here
+  // User.associate = (models) => {
+  //   // User.belongsTo(models.Encounter, { foreignKey: 'ReportedBy' });
   // };
+
   return User;
 };

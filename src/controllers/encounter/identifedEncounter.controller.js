@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { IdentifiedEncounter } from '../../models';
+import { IdentifiedEncounter, User } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
 export const getAllIdentifiedEncounters = async (req, res) => {
@@ -52,7 +52,15 @@ export const getIdentifiedEncounter = async (req, res) => {
   try {
     // const { identifiedEncounterId } = req.body;
     const { id } = req.query;
-    const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
+    const identifiedEncounter = await IdentifiedEncounter.findOne({
+      include: [
+        {
+          model: User,
+          attributes: ['firstName'],
+        },
+      ],
+      where: { IdentifiedEncounterID: id },
+    });
     return successResponse(req, res, { identifiedEncounter });
   } catch (error) {
     return errorResponse(req, res, error.message);

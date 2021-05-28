@@ -1,4 +1,4 @@
-import { Encounter } from '../../models';
+import { Encounter, User } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
 export const getAllEncounters = async (req, res) => {
@@ -25,7 +25,7 @@ export const getUserEncounters = async (req, res) => {
   const { id } = req.user;
   try {
     const encounters = await Encounter.findAndCountAll({
-      where: { ReportedBy: id },
+      where: { ReportedBy: id, IsActive: true },
       order: [['CreatedAt', 'DESC']],
     });
     return successResponse(req, res, { encounters });
@@ -78,7 +78,19 @@ export const addEncounter = async (req, res) => {
 export const getEncounter = async (req, res) => {
   try {
     const { id } = req.query;
-    const encounter = await Encounter.findOne({ where: { EncounterID: id } });
+    const encounter = await Encounter.findOne({
+      include: [
+        {
+          model: User,
+          // where: {
+          // },
+          attributes: ['firstName'],
+
+        },
+
+      ],
+      where: { EncounterID: id },
+    });
     return successResponse(req, res, { encounter });
   } catch (error) {
     return errorResponse(req, res, error.message);

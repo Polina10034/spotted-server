@@ -8,9 +8,23 @@ const { Op } = Sequelize;
 export const getAllPhotos = async (req, res) => {
   try {
     const photos = await Photo.findAndCountAll({
-    //   order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
     });
     return successResponse(req, res, { photos });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+export const getAllDetectPhotosCount = async (req, res) => {
+  try {
+    const photos = await Photo.findAndCountAll({
+      where: {
+        IdentifiedEncounterID: {
+          [Op.not]: null, // Like: sellDate IS NOT NULL
+        },
+      },
+    });
+    const { count } = photos;
+    return successResponse(req, res, { count });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
@@ -78,9 +92,7 @@ export const getIdntEncounterPhotosSites = async (req, res) => {
           attributes: ['SiteID', 'EncounterID', 'EncounterDate'],
           include: {
             model: Site,
-            // required: true
           },
-
         },
 
       ],

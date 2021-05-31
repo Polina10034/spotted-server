@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       defaultScope: {
-        attributes: { exclude: ['password', 'verifyToken', 'isAdmin'] },
+        attributes: { exclude: ['password', 'verifyToken'] },
       },
       scopes: {
         withSecretColumns: {
@@ -43,9 +43,9 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   );
-  // User.associate = (models) => {
-  //   // User.belongsTo(models.Encounter, { foreignKey: 'ReportedBy' });
-  // };
+  User.associate = (models) => {
+    User.hasMany(models.Encounter, { foreignKey: 'ReportedBy' });
+  };
 
   return User;
 };

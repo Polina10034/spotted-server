@@ -6,7 +6,7 @@ export const getAllIdentifiedEncounters = async (req, res) => {
   try {
     // const page = req.params.page || 1;
     const identifiedEncounters = await IdentifiedEncounter.findAndCountAll({
-      order: [['UpdatedAt', 'DESC']],
+      // order: [['UpdatedAt', 'DESC']],
     });
     return successResponse(req, res, { identifiedEncounters });
   } catch (error) {

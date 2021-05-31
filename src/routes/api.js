@@ -32,6 +32,7 @@ router.post(
   userController.changePassword,
 );
 
+router.get('/getAllUsers', userController.allUsers);
 router.put('/user', userController.getUser);
 
 router.get('/getAllEncounters', encounterController.getAllEncounters);
@@ -63,6 +64,7 @@ router.post('/getPhotosBoundingBoxes', boundingBoxController.getPhotosBoundingBo
 
 router.post('/addPhoto', photoController.addPhoto);
 router.get('/getAllPhotos', photoController.getAllPhotos);
+router.get('/getAllDetectPhotosCount', photoController.getAllDetectPhotosCount);
 router.get('/getEncounterPhotos', photoController.getEncounterPhotos);
 router.get('/getIdntEncounterPhotos', photoController.getIdntEncounterPhotos);
 router.get('/getIdntEncounterPhotosSites', photoController.getIdntEncounterPhotosSites);

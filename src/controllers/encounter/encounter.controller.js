@@ -1,9 +1,16 @@
-import { Encounter, User } from '../../models';
+import { Encounter, User, Site } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
+
+const Sequelize = require('sequelize');
+
+const { Op } = Sequelize;
 
 export const getAllEncounters = async (req, res) => {
   try {
-    const encounters = await Encounter.findAndCountAll({});
+    const encounters = await Encounter.findAndCountAll({
+      include: [{ model: Site }],
+
+    });
     return successResponse(req, res, { encounters });
   } catch (error) {
     return errorResponse(req, res, error.message);
@@ -13,7 +20,14 @@ export const getAllEncounters = async (req, res) => {
 export const getActiveEncounters = async (req, res) => {
   try {
     const encounters = await Encounter.findAndCountAll({
-      where: { IsActive: true },
+      include: [{ model: Site }],
+      where: {
+        IsActive: true,
+        SiteID: {
+          [Op.gt]: 0,
+          [Op.not]: null, // Like: sellDate IS NOT NULL
+        },
+      },
     });
     return successResponse(req, res, { encounters });
   } catch (error) {
@@ -26,7 +40,7 @@ export const getUserEncounters = async (req, res) => {
   try {
     const encounters = await Encounter.findAndCountAll({
       where: { ReportedBy: id, IsActive: true },
-      order: [['CreatedAt', 'DESC']],
+      // order: [['CreatedAt', 'DESC']],
     });
     return successResponse(req, res, { encounters });
   } catch (error) {

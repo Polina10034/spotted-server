@@ -43,7 +43,7 @@ router.post('/addEncounter', encounterController.addEncounter);
 router.put('/updateEncounter', encounterController.updateEncounter);
 router.delete('/deleteEncounter', encounterController.deleteEncounter);
 router.put('/updateEncounterIsActive', encounterController.updateEncounterIsActive);
-
+router.get('/getActiveEncountersperMonth', encounterController.getActiveEncountersperMonth);
 
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
 router.post('/uploadrawphoto', singleFileUpload.single('image'), azurePhotoController.rawImageUpload);
@@ -52,6 +52,8 @@ router.post('/rawImageBlobCopy', azurePhotoController.rawImageCopy);
 
 router.get('/getAllIdentifiedEncounters', identifiedEncounterController.getAllIdentifiedEncounters);
 router.get('/getIdentifiedEncounter', identifiedEncounterController.getIdentifiedEncounter);
+router.get('/getIdentEncountersperMonth', identifiedEncounterController.getIdentEncountersperMonth);
+router.get('/getIdntEncounterPhotosbySides', identifiedEncounterController.getIdntEncounterPhotosbySides);
 router.put('/updateIdentifiedEncounter', identifiedEncounterController.updateIdentifiedEncounter);
 router.delete('/deleteIdentifiedEncounter', identifiedEncounterController.deleteIdentifiedEncounter);
 router.post('/addIdentifiedEncounter', identifiedEncounterController.addIdentifiedEncounter);
@@ -69,6 +71,7 @@ router.get('/getEncounterPhotos', photoController.getEncounterPhotos);
 router.get('/getIdntEncounterPhotos', photoController.getIdntEncounterPhotos);
 router.get('/getIdntEncounterPhotosSites', photoController.getIdntEncounterPhotosSites);
 router.put('/updateDBphoto', photoController.updateDBidentPhoto);
+router.get('/getPhotosbySides', photoController.getPhotosbySides);
 
 
 router.get('/getPhoto', photoController.getPhoto);
@@ -76,7 +79,6 @@ router.put('/getPhotoByUrl', photoController.getPhotoByUrl);
 router.put('/updatePhoto', photoController.updatePhoto);
 router.delete('/deletePhoto', photoController.deletePhoto);
 router.put('/updatePhotoSide', photoController.updatePhotoSide);
-
 
 router.get('/getAllIsraeliSites', siteController.getAllIsraeliSites);
 router.get('/getLifeStages', lifeStageController.getAllLifeStage);

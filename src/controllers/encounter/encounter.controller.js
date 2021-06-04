@@ -1,6 +1,8 @@
+/* eslint-disable no-await-in-loop */
 import { Encounter, User, Site } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
+const moment = require('moment');
 const Sequelize = require('sequelize');
 
 const { Op } = Sequelize;
@@ -30,6 +32,36 @@ export const getActiveEncounters = async (req, res) => {
       },
     });
     return successResponse(req, res, { encounters });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+export const getActiveEncountersperMonth = async (req, res) => {
+  const encMonthData = [];
+  const monthsString = [];
+  const cuurMonth = moment().month();
+  const currYear = moment().year();
+
+  try {
+    for (let i = 0; i < 12; i += 1) {
+      const startMonth = moment([currYear - 1, cuurMonth, 1]).add(i, 'months').toDate();
+      const startMonthString = moment([currYear - 1, cuurMonth, 1]).add(i, 'months').format('MMM');
+      const endMonth = moment([currYear - 1, cuurMonth, 1]).add(i + 1, 'months').toDate();
+
+      const encounters = await Encounter.findAndCountAll({
+        where: {
+          IsActive: true,
+          EncounterDate: {
+            [Op.gte]: startMonth,
+            [Op.lt]: endMonth,
+          },
+        },
+      });
+      encMonthData.push(encounters.count);
+      monthsString.push(startMonthString);
+    }
+    return successResponse(req, res, { encMonthData, monthsString });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
@@ -96,8 +128,6 @@ export const getEncounter = async (req, res) => {
       include: [
         {
           model: User,
-          // where: {
-          // },
           attributes: ['firstName'],
 
         },

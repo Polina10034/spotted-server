@@ -51,10 +51,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       CreatedAt: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
       },
       UpdatedAt: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
       },
       UpdatedBy: {
         type: DataTypes.INTEGER,
@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
       classMethods: {
         associate(models) {
-          this.hasMany(models.Photo, { foreignKey: 'IdentifiedEncounterID' });
+          // this.hasMany(models.Photo, { foreignKey: 'IdentifiedEncounterID' });
           this.belongsTo(models.User, { foreignKey: 'UpdatedBy' });
         },
       },
@@ -74,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   IdentifiedEncounter.associate = (models) => {
     IdentifiedEncounter.belongsTo(models.User, { foreignKey: 'UpdatedBy' });
+    IdentifiedEncounter.hasMany(models.Photo, { foreignKey: 'IdentifiedEncounterID' });
   };
   return IdentifiedEncounter;
 };

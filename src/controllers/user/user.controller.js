@@ -34,6 +34,19 @@ export const getUser = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+// export const setUserAdmin = async (req, res) => {
+//   const { email } = req.body;
+//   try {
+//     const user = await User.update({
+//       where: { email },
+//     });
+//     return successResponse(req, res, { user });
+//   } catch (error) {
+//     return errorResponse(req, res, error.message);
+//   }
+// };
+
 export const register = async (req, res) => {
   try {
     const {

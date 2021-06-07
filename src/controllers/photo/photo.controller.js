@@ -86,9 +86,6 @@ export const getIdntEncounterPhotosSites = async (req, res) => {
           model: Encounter,
           where: {
             IsActive: true,
-            // PathPhoto: {
-            //   [Op.not]: null, // Like: sellDate IS NOT NULL
-            // },
           },
           attributes: ['SiteID', 'EncounterID', 'EncounterDate'],
           include: {
@@ -101,9 +98,8 @@ export const getIdntEncounterPhotosSites = async (req, res) => {
       ],
       where: {
         IdentifiedEncounterID: id,
-        // EncounterID,
         PathPhoto: {
-          [Op.not]: null, // Like: sellDate IS NOT NULL
+          [Op.not]: null,
         },
       },
       attributes: ['src', 'IdentifiedEncounterID', 'EncounterID'],

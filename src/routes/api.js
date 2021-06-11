@@ -34,6 +34,8 @@ router.post(
 
 router.get('/getAllUsers', userController.allUsers);
 router.put('/user', userController.getUser);
+router.put('/setUserAdmin', userController.setUserAdmin);
+router.put('/updateUser', userController.updateUser);
 
 router.get('/getAllEncounters', encounterController.getAllEncounters);
 router.get('/getActiveEncounters', encounterController.getActiveEncounters);
@@ -48,7 +50,8 @@ router.get('/getActiveEncountersperMonth', encounterController.getActiveEncounte
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
 router.post('/uploadrawphoto', singleFileUpload.single('image'), azurePhotoController.rawImageUpload);
 router.delete('/deletephotofromBlob', azurePhotoController.imageDelete);
-router.post('/rawImageBlobCopy', azurePhotoController.rawImageCopy);
+// router.post('/rawImageBlobCopy', azurePhotoController.rawImageCopy);
+router.post('/imageBlobCopy', azurePhotoController.ImageCopy);
 
 router.get('/getAllIdentifiedEncounters', identifiedEncounterController.getAllIdentifiedEncounters);
 router.get('/getIdentifiedEncounter', identifiedEncounterController.getIdentifiedEncounter);
@@ -72,7 +75,7 @@ router.get('/getIdntEncounterPhotos', photoController.getIdntEncounterPhotos);
 router.get('/getIdntEncounterPhotosSites', photoController.getIdntEncounterPhotosSites);
 router.put('/updateDBphoto', photoController.updateDBidentPhoto);
 router.get('/getPhotosbySides', photoController.getPhotosbySides);
-
+router.get('/getEncounterPhotosforIdentification', photoController.getEncounterPhotosforIdentification);
 
 router.get('/getPhoto', photoController.getPhoto);
 router.put('/getPhotoByUrl', photoController.getPhotoByUrl);

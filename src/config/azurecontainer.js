@@ -67,21 +67,27 @@ const uploadRawFileToBlob = async (directoryPath, file) => new Promise((resolve,
 });
 
 const CopyBlobFiles = async (directoryPath, urlArr) => new Promise((resolve, reject) => {
+  console.log(directoryPath);
   const lenght = urlArr.length;
   const results = [];
+  console.log(lenght);
   for (let i = 0; i < lenght; i += 1) {
     const url = urlArr[i];
     const urlSplit = (url).split('/');
+    const fileNameSplit = urlSplit[5].split('.');
     const blobService = azureStorage.createBlobService(azureStorageConfig.accountName, azureStorageConfig.accountKey);
-    blobService.startCopyBlob(url, azureStorageConfig.containerName, `${directoryPath}/${urlSplit[5]}`, (err, result) => {
+    blobService.startCopyBlob(url, azureStorageConfig.containerName, `${directoryPath}/${fileNameSplit[0]}_${i}.${fileNameSplit[1]}`, (err, result) => {
       if (err) {
         reject(err);
       } else {
         results.push({
           filename: urlSplit[5],
-          url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}`,
+          url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}_${i}`,
         });
-        resolve(`Successfully Copied: ${JSON.stringify(result)}`);
+        resolve({
+          url: `${azureStorageConfig.blobURL}${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}_${i}`,
+          result,
+        });
       }
     });
   }

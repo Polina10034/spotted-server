@@ -56,6 +56,7 @@ export const addEncounterFirstSystemResults = async (req, res) => {
     for (let i = 0; i < lenght; i += 1) {
       const { data, counts, filename } = results[i];
 
+      // for (let n = 0; n < counts; n += 1) {
       let payload = {};
       payload = {
         EncounterID: encounterId,
@@ -93,7 +94,7 @@ export const addEncounterFirstSystemResults = async (req, res) => {
           FirstSystemResultID: newRow.FirstSystemResultID,
           src: blobPhoto.url,
         };
-        // console.log(`out payloadPhoto: ${payloadPhoto}`);
+          // console.log(`out payloadPhoto: ${payloadPhoto}`);
         photosPayload.push(payloadPhoto);
       } else {
         // console.log('deleting:');
@@ -101,6 +102,7 @@ export const addEncounterFirstSystemResults = async (req, res) => {
       }
       // console.log('done1:');
     }
+    // }
     if (deletePhotos.length > 0) {
       deleteResult = await deleteBlobFile(encounterId, deletePhotos);
     }

@@ -1,5 +1,7 @@
 /* eslint-disable no-await-in-loop */
-import { Photo, Encounter, Site } from '../../models';
+import {
+  Photo, Encounter, Site, FirstSystemResult,
+} from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
 const Sequelize = require('sequelize');
@@ -47,9 +49,42 @@ export const getEncounterPhotos = async (req, res) => {
         'FirstSystemResultID',
         'LeftSide',
         'RightSide',
-        // 'FrontSide',
         'TopSide',
-        // 'BackSide',
+      ],
+    });
+    return successResponse(req, res, { photos });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+export const getEncounterPhotosforIdentification = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const photos = await Photo.findAll({
+      include: [
+        {
+          model: FirstSystemResult,
+          where: {
+            Count: {
+              [Op.eq]: 1,
+            },
+          },
+        },
+      ],
+      where: {
+        EncounterID: id,
+        PathPhoto: {
+          [Op.not]: null, // Like: sellDate IS NOT NULL
+        },
+      },
+      attributes: [
+        'src',
+        'PhotoID',
+        'FirstSystemResultID',
+        'LeftSide',
+        'RightSide',
+        'TopSide',
       ],
     });
     return successResponse(req, res, { photos });

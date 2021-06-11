@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       hasTrigger: true,
     },
   );
-    // FirstSystemResult.associate = function (models) {
-    //     // associations can be defined here
-    // };
+  // FirstSystemResult.associate = (models) => {
+  //   FirstSystemResult.belongsTo(models.Photo, { foreignKey: 'EncounterID' });
+  // };
   return FirstSystemResult;
 };

@@ -40,10 +40,22 @@ module.exports = {
     }
   },
 
-  async rawImageCopy(req, res, next) {
+  // async rawImageCopy(req, res, next) {
+  //   try {
+  //     const encounterId = req.query.id;
+  //     const status = await CopyBlobFiles(encounterId, req.urlArr); // encounterId is a directory in the Azure container for encounter images
+  //     return res.json(status);
+  //   } catch (error) {
+  //     next(error);
+  //     return error;
+  //   }
+  // },
+
+  async ImageCopy(req, res, next) {
+    console.log('heere', req.user);
     try {
-      const encounterId = req.query.id;
-      const status = await CopyBlobFiles(encounterId, req.urlArr); // encounterId is a directory in the Azure container for encounter images
+      const { urlArr, id } = req.body;
+      const status = await CopyBlobFiles(id, urlArr); // encounterId is a directory in the Azure container for encounter images
       return res.json(status);
     } catch (error) {
       next(error);

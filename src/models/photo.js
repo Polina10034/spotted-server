@@ -46,13 +46,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
     }, {
-      // classMethods: {
-      //   associate(models) {
-      //     this.hasOne(models.Encounter, { foreignKey: 'EncounterID' });
-      //     // this.belongsTo(models.Encounter, { foreignKey: 'EncounterID' });
-      //     this.belongsTo(models.IdentifiedEncounterID, { foreignKey: 'IdentifiedEncounterID' });
-      //   },
-      // },
       timestamps: false,
       hasTrigger: true,
 
@@ -60,6 +53,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Photo.associate = (models) => {
     Photo.belongsTo(models.Encounter, { foreignKey: 'EncounterID' });
+    Photo.belongsTo(models.FirstSystemResult, { foreignKey: 'FirstSystemResultID' });
   };
   return Photo;
 };

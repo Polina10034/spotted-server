@@ -24,10 +24,10 @@ export const allUsers = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
-  const { id } = req.body;
+  const { userId } = req.user;
   try {
     const user = await User.findOne({
-      where: { id },
+      where: { id: userId },
     });
     return successResponse(req, res, { user });
   } catch (error) {
@@ -35,17 +35,43 @@ export const getUser = async (req, res) => {
   }
 };
 
-// export const setUserAdmin = async (req, res) => {
-//   const { email } = req.body;
-//   try {
-//     const user = await User.update({
-//       where: { email },
-//     });
-//     return successResponse(req, res, { user });
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
+export const profile = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const user = await User.findOne({ where: { id: userId } });
+    return successResponse(req, res, { user });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+export const setUserAdmin = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.update(
+      { isAdmin: 1 },
+      { where: { email } },
+    );
+    return successResponse(req, res, { user });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+export const updateUser = async (req, res) => {
+  const { userId } = req.user;
+  console.log(req.body);
+  const { firstName, lastName, email } = req.body;
+  try {
+    const user = await User.update(
+      { firstName, lastName, email },
+      { where: { id: userId } },
+    );
+    return successResponse(req, res, { user });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
 
 export const register = async (req, res) => {
   try {
@@ -107,16 +133,6 @@ export const login = async (req, res) => {
     );
     delete user.dataValues.password;
     return successResponse(req, res, { user, token });
-  } catch (error) {
-    return errorResponse(req, res, error.message);
-  }
-};
-
-export const profile = async (req, res) => {
-  try {
-    const { userId } = req.user;
-    const user = await User.findOne({ where: { id: userId } });
-    return successResponse(req, res, { user });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }

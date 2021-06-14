@@ -1,6 +1,8 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable max-len */
-import { IdentifiedEncounter, User, Photo } from '../../models';
+import {
+  IdentifiedEncounter, User, Photo, LifeStage,
+} from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
 const moment = require('moment');
@@ -23,26 +25,36 @@ export const getAllIdentifiedEncounters = async (req, res) => {
 export const addIdentifiedEncounter = async (req, res) => {
   try {
     const {
-      Photographer, EncounterID, LifeStageID, TL, DL, DW, MaxDepth, Distance, Temp, Description, Link, Sex, isAlive, ProfilePicture,
+      LifeStageID,
+      Gender,
+      isAlive,
+      ProfilePicture,
+      // TL,
+      // DL,
+      // DW,
+      // MaxDepth,
+      // Distance,
+      // Temp,
+      // Description,
+      // Link,
+
     } = req.body;
     let payload = {};
     const { userId } = req.user;
     payload = {
-      Photographer,
       LifeStageID,
-      EncounterID,
-      Sex,
+      Gender,
       isAlive: isAlive === 'yes' ? 1 : 0,
-      TL,
-      DL,
-      DW,
-      MaxDepth,
-      Distance,
-      Temp,
-      Description,
-      Link,
       UpdateBy: userId,
       ProfilePicture,
+      // TL,
+      // DL,
+      // DW,
+      // MaxDepth,
+      // Distance,
+      // Temp,
+      // Description,
+      // Link,
 
     };
 
@@ -53,7 +65,6 @@ export const addIdentifiedEncounter = async (req, res) => {
   }
 };
 
-
 export const getIdentifiedEncounter = async (req, res) => {
   try {
     // const { identifiedEncounterId } = req.body;
@@ -63,6 +74,10 @@ export const getIdentifiedEncounter = async (req, res) => {
         {
           model: User,
           attributes: ['firstName'],
+        },
+        {
+          model: LifeStage,
+          // attributes: ['firstName'],
         },
       ],
       where: { IdentifiedEncounterID: id },
@@ -76,25 +91,26 @@ export const getIdentifiedEncounter = async (req, res) => {
 export const updateIdentifiedEncounter = async (req, res) => {
   try {
     const { id } = req.query;
-    // const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
-    await IdentifiedEncounter
-      .update({
-        Photographer: req.body.Photographer,
+    await IdentifiedEncounter.update(
+      {
         LifeStageID: req.body.LifeStageID,
-        Sex: req.body.Sex,
+        Gender: req.body.Sex,
         isAlive: req.body.isAlive === 'yes' ? 1 : 0,
-        TL: req.body.TL,
-        DL: req.body.DL,
-        DW: req.body.DW,
-        MaxDepth: req.body.MaxDepth,
-        Distance: req.body.Distance,
-        Temp: req.body.Temp,
-        Description: req.body.Description,
-        SpeciesID: req.body.SpeciesID,
-        Link: req.body.Link,
         UpdateBy: req.body.UpdateBy,
         ProfilePicture: req.body.ProfilePicture,
-      }, { where: { IdentifiedEncounterID: id } });
+        // TL: req.body.TL,
+        // DL: req.body.DL,
+        // DW: req.body.DW,
+        // MaxDepth: req.body.MaxDepth,
+        // Distance: req.body.Distance,
+        // Temp: req.body.Temp,
+        // Description: req.body.Description,
+        // Link: req.body.Link,
+        // Photographer: req.body.Photographer,
+
+      },
+      { where: { IdentifiedEncounterID: id } },
+    );
     return successResponse(req, res, {});
   } catch (error) {
     return errorResponse(req, res, error.message);
@@ -104,7 +120,9 @@ export const updateIdentifiedEncounter = async (req, res) => {
 export const deleteIdentifiedEncounter = async (req, res) => {
   try {
     const { id } = req.query;
-    const identifiedEncounter = await IdentifiedEncounter.findOne({ where: { IdentifiedEncounterID: id } });
+    const identifiedEncounter = await IdentifiedEncounter.findOne({
+      where: { IdentifiedEncounterID: id },
+    });
     await identifiedEncounter.destroy();
     return successResponse(req, res, { identifiedEncounter });
   } catch (error) {
@@ -115,7 +133,27 @@ export const deleteIdentifiedEncounter = async (req, res) => {
 export const getIdntEncounterPhotos = async (req, res) => {
   try {
     const { individualids } = req.body;
-    const identEncounters = await IdentifiedEncounter.findAll({ where: { IdentifiedEncounterID: individualids } });
+    const identEncounters = await IdentifiedEncounter.findAll({
+      where: { IdentifiedEncounterID: individualids },
+    });
+    return successResponse(req, res, { identEncounters });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+export const getIdntEncountersPhotos = async (req, res) => {
+  try {
+    const { individualids } = req.body;
+    const identEncounters = await IdentifiedEncounter.findAll({
+      include: [
+        {
+          model: Photo,
+          attributes: ['src', 'IdentifiedEncounterID', 'FirstSystemResultID', 'SecoundSystemResultID', 'PhotoID', 'EncounterID'],
+        },
+      ],
+      where: { IdentifiedEncounterID: individualids },
+    });
     return successResponse(req, res, { identEncounters });
   } catch (error) {
     return errorResponse(req, res, error.message);
@@ -128,47 +166,50 @@ export const getIdntEncounterPhotosbySides = async (req, res) => {
 
   try {
     const RightPhotos = await IdentifiedEncounter.findAndCountAll({
-      include: [{
-        model: Photo,
-        where: {
-          RightSide: true,
-          PathPhoto: {
-            [Op.not]: null,
+      include: [
+        {
+          model: Photo,
+          where: {
+            RightSide: true,
+            PathPhoto: {
+              [Op.not]: null,
+            },
           },
+          attributes: ['src', 'RightSide', 'IdentifiedEncounterID'],
         },
-        attributes: ['src', 'RightSide', 'IdentifiedEncounterID'],
-
-      }],
+      ],
     });
     IdntEncountersCount.push(RightPhotos.count);
 
     const LeftPhotos = await IdentifiedEncounter.findAndCountAll({
-      include: [{
-        model: Photo,
-        where: {
-          LeftSide: true,
-          PathPhoto: {
-            [Op.not]: null,
+      include: [
+        {
+          model: Photo,
+          where: {
+            LeftSide: true,
+            PathPhoto: {
+              [Op.not]: null,
+            },
           },
+          attributes: ['src', 'LeftSide', 'IdentifiedEncounterID'],
         },
-        attributes: ['src', 'LeftSide', 'IdentifiedEncounterID'],
-
-      }],
+      ],
     });
     IdntEncountersCount.push(LeftPhotos.count);
 
     const TopPhotos = await IdentifiedEncounter.findAndCountAll({
-      include: [{
-        model: Photo,
-        where: {
-          TopSide: true,
-          PathPhoto: {
-            [Op.not]: null,
+      include: [
+        {
+          model: Photo,
+          where: {
+            TopSide: true,
+            PathPhoto: {
+              [Op.not]: null,
+            },
           },
+          attributes: ['src', 'TopSide', 'IdentifiedEncounterID'],
         },
-        attributes: ['src', 'TopSide', 'IdentifiedEncounterID'],
-
-      }],
+      ],
     });
     IdntEncountersCount.push(TopPhotos.count);
 
@@ -178,7 +219,6 @@ export const getIdntEncounterPhotosbySides = async (req, res) => {
   }
 };
 
-
 export const getIdentEncountersperMonth = async (req, res) => {
   const encMonthData = [];
   const monthsString = [];
@@ -187,9 +227,15 @@ export const getIdentEncountersperMonth = async (req, res) => {
 
   try {
     for (let i = 0; i < 12; i += 1) {
-      const startMonth = moment([currYear - 1, cuurMonth, 1]).add(i, 'months').toDate();
-      const startMonthString = moment([currYear - 1, cuurMonth, 1]).add(i, 'months').format('MMM');
-      const endMonth = moment([currYear - 1, cuurMonth, 1]).add(i + 1, 'months').toDate();
+      const startMonth = moment([currYear - 1, cuurMonth, 1])
+        .add(i, 'months')
+        .toDate();
+      const startMonthString = moment([currYear - 1, cuurMonth, 1])
+        .add(i, 'months')
+        .format('MMM');
+      const endMonth = moment([currYear - 1, cuurMonth, 1])
+        .add(i + 1, 'months')
+        .toDate();
 
       const encounters = await IdentifiedEncounter.findAndCountAll({
         where: {

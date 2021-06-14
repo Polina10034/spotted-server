@@ -61,7 +61,7 @@ router.put('/updateIdentifiedEncounter', identifiedEncounterController.updateIde
 router.delete('/deleteIdentifiedEncounter', identifiedEncounterController.deleteIdentifiedEncounter);
 router.post('/addIdentifiedEncounter', identifiedEncounterController.addIdentifiedEncounter);
 router.post('/getIdntEncountersProfilePics', identifiedEncounterController.getIdntEncounterPhotos);
-
+router.post('/getIdntEncountersPhotos', identifiedEncounterController.getIdntEncountersPhotos);
 
 router.post('/addBoundingBox', boundingBoxController.addBoundingBox);
 router.get('/getBoundingBox', boundingBoxController.getBoundingBox);

@@ -11,9 +11,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
     },
+    {
+      timestamps: false, // TODO remove & test
+      hasTrigger: true,
+    },
   );
-    // ReportType.associate = function (models) {
-    //   // associations can be defined here
-    // };
+  // ReportType.associate = (models) => {
+  //   // ReportType.belongsTo(models.Encounter, { foreignKey: 'ReportTypeID' });
+  // };
   return ReportType;
 };

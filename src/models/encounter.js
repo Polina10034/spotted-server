@@ -13,9 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       SiteID: {
         type: DataTypes.INTEGER,
       },
-      ManualResultsID: {
-        type: DataTypes.INTEGER,
-      },
       Verified: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
@@ -23,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       ReportedBy: {
         type: DataTypes.INTEGER,
       },
-      MediaType: {
+      MediaTypeID: {
         type: DataTypes.INTEGER,
       },
       SpottedCount: {
@@ -64,6 +61,33 @@ module.exports = (sequelize, DataTypes) => {
       ReportTypeID: {
         type: DataTypes.INTEGER,
       },
+      TL: {
+        type: DataTypes.INTEGER,
+      },
+      DL: {
+        type: DataTypes.INTEGER,
+      },
+      DW: {
+        type: DataTypes.INTEGER,
+      },
+      Distance: {
+        type: DataTypes.INTEGER,
+      },
+      MaxDepth: {
+        type: DataTypes.INTEGER,
+      },
+      Temp: {
+        type: DataTypes.INTEGER,
+      },
+      Description: {
+        type: DataTypes.STRING,
+      },
+      Link: {
+        type: DataTypes.STRING,
+      },
+      Photographer: {
+        type: DataTypes.STRING,
+      },
     },
     {
       timestamps: false, // TODO remove & test
@@ -75,6 +99,7 @@ module.exports = (sequelize, DataTypes) => {
   Encounter.associate = (models) => {
     Encounter.belongsTo(models.Site, { foreignKey: 'SiteID' });
     Encounter.belongsTo(models.User, { foreignKey: 'ReportedBy' });
+    Encounter.belongsTo(models.ReportType, { foreignKey: 'ReportTypeID' });
   };
 
   return Encounter;

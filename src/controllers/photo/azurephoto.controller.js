@@ -52,7 +52,6 @@ module.exports = {
   // },
 
   async ImageCopy(req, res, next) {
-    console.log('heere', req.user);
     try {
       const { urlArr, id } = req.body;
       const status = await CopyBlobFiles(id, urlArr); // encounterId is a directory in the Azure container for encounter images

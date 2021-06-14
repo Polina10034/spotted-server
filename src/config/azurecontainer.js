@@ -45,7 +45,6 @@ const uploadFileToBlob = async (directoryPath, file) => new Promise((resolve, re
 const uploadRawFileToBlob = async (directoryPath, file) => new Promise((resolve, reject) => {
   // const blobName = getBlobName(file.originalname);
   const blobName = file.originalname;
-
   // const blobName = getBlobName(file.originalname);
   const stream = getStream(file.buffer);
   const streamLength = file.buffer.length;
@@ -67,10 +66,8 @@ const uploadRawFileToBlob = async (directoryPath, file) => new Promise((resolve,
 });
 
 const CopyBlobFiles = async (directoryPath, urlArr) => new Promise((resolve, reject) => {
-  console.log(directoryPath);
   const lenght = urlArr.length;
   const results = [];
-  console.log(lenght);
   for (let i = 0; i < lenght; i += 1) {
     const url = urlArr[i];
     const urlSplit = (url).split('/');

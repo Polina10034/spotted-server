@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   );
-    // IdentifiedEncounter.associate = function (models) {
-    //   // associations can be defined here
-    // };
+  LifeStage.associate = (models) => {
+    LifeStage.belongsTo(models.IdentifiedEncounter, { foreignKey: 'LifeStageID' });
+  };
   return LifeStage;
 };

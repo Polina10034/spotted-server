@@ -53,6 +53,8 @@ module.exports = (sequelize, DataTypes) => {
   );
   Photo.associate = (models) => {
     Photo.belongsTo(models.Encounter, { foreignKey: 'EncounterID' });
+    Photo.belongsTo(models.IdentifiedEncounter, { foreignKey: 'IdentifiedEncounterID' });
+
     Photo.belongsTo(models.FirstSystemResult, { foreignKey: 'FirstSystemResultID' });
   };
   return Photo;

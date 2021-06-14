@@ -7,46 +7,45 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      Photographer: {
-        type: DataTypes.STRING,
-      },
-
-      EncounterID: {
-        type: DataTypes.INTEGER,
-      },
+      // Photographer: {
+      //   type: DataTypes.STRING,
+      // },
+      // EncounterID: {
+      //   type: DataTypes.INTEGER,
+      // },
       LifeStageID: {
         type: DataTypes.INTEGER,
       },
-      Sex: {
+      Gender: {
         type: DataTypes.STRING,
       },
-      isAlive: {
+      IsAlive: {
         type: DataTypes.BOOLEAN,
       },
-      TL: {
-        type: DataTypes.INTEGER,
-      },
-      DL: {
-        type: DataTypes.INTEGER,
-      },
-      DW: {
-        type: DataTypes.INTEGER,
-      },
-      Distance: {
-        type: DataTypes.INTEGER,
-      },
-      MaxDepth: {
-        type: DataTypes.INTEGER,
-      },
-      Temp: {
-        type: DataTypes.INTEGER,
-      },
-      Description: {
-        type: DataTypes.STRING,
-      },
-      Link: {
-        type: DataTypes.STRING,
-      },
+      // TL: {
+      //   type: DataTypes.INTEGER,
+      // },
+      // DL: {
+      //   type: DataTypes.INTEGER,
+      // },
+      // DW: {
+      //   type: DataTypes.INTEGER,
+      // },
+      // Distance: {
+      //   type: DataTypes.INTEGER,
+      // },
+      // MaxDepth: {
+      //   type: DataTypes.INTEGER,
+      // },
+      // Temp: {
+      //   type: DataTypes.INTEGER,
+      // },
+      // Description: {
+      //   type: DataTypes.STRING,
+      // },
+      // Link: {
+      //   type: DataTypes.STRING,
+      // },
       ProfilePicture: {
         type: DataTypes.STRING,
       },
@@ -74,6 +73,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   IdentifiedEncounter.associate = (models) => {
     IdentifiedEncounter.belongsTo(models.User, { foreignKey: 'UpdatedBy' });
+    IdentifiedEncounter.belongsTo(models.LifeStage, { foreignKey: 'LifeStageID' });
     IdentifiedEncounter.hasMany(models.Photo, { foreignKey: 'IdentifiedEncounterID' });
   };
   return IdentifiedEncounter;

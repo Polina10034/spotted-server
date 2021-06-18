@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import {
-  Encounter, User, Site, ReportType,
+  Encounter, User, Site, ReportType, MediaType,
 } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
@@ -23,7 +23,7 @@ export const getAllEncounters = async (req, res) => {
 export const getActiveEncounters = async (req, res) => {
   try {
     const encounters = await Encounter.findAndCountAll({
-      include: [{ model: Site }],
+      include: [{ model: Site }, { model: ReportType }, { model: MediaType }],
       where: {
         IsActive: true,
         SiteID: {

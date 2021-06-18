@@ -2,6 +2,12 @@ module.exports = (sequelize, DataTypes) => {
   const Encounter = sequelize.define(
     'Encounter',
     {
+      id: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.EncounterID}`;
+        },
+      },
       EncounterID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -99,6 +105,7 @@ module.exports = (sequelize, DataTypes) => {
   Encounter.associate = (models) => {
     Encounter.belongsTo(models.Site, { foreignKey: 'SiteID' });
     Encounter.belongsTo(models.User, { foreignKey: 'ReportedBy' });
+    Encounter.belongsTo(models.MediaType, { foreignKey: 'MediaTypeID' });
     Encounter.belongsTo(models.ReportType, { foreignKey: 'ReportTypeID' });
   };
 

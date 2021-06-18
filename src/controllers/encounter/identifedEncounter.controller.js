@@ -29,33 +29,15 @@ export const addIdentifiedEncounter = async (req, res) => {
       Gender,
       isAlive,
       ProfilePicture,
-      // TL,
-      // DL,
-      // DW,
-      // MaxDepth,
-      // Distance,
-      // Temp,
-      // Description,
-      // Link,
-
     } = req.body;
     let payload = {};
-    const { userId } = req.user;
+
     payload = {
       LifeStageID,
-      Gender,
-      isAlive: isAlive === 'yes' ? 1 : 0,
-      UpdateBy: userId,
+      Gender: Gender || 'unknown',
+      isAlive,
+      UpdateBy: req.user.id,
       ProfilePicture,
-      // TL,
-      // DL,
-      // DW,
-      // MaxDepth,
-      // Distance,
-      // Temp,
-      // Description,
-      // Link,
-
     };
 
     const newIdentifiedEncounter = await IdentifiedEncounter.create(payload);
@@ -67,7 +49,6 @@ export const addIdentifiedEncounter = async (req, res) => {
 
 export const getIdentifiedEncounter = async (req, res) => {
   try {
-    // const { identifiedEncounterId } = req.body;
     const { id } = req.query;
     const identifiedEncounter = await IdentifiedEncounter.findOne({
       include: [
@@ -150,6 +131,14 @@ export const getIdntEncountersPhotos = async (req, res) => {
         {
           model: Photo,
           attributes: ['src', 'IdentifiedEncounterID', 'FirstSystemResultID', 'SecoundSystemResultID', 'PhotoID', 'EncounterID'],
+        },
+        {
+          model: User,
+          attributes: ['firstName'],
+        },
+        {
+          model: LifeStage,
+          attributes: ['Stage'],
         },
       ],
       where: { IdentifiedEncounterID: individualids },

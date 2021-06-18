@@ -2,6 +2,13 @@ module.exports = (sequelize, DataTypes) => {
   const IdentifiedEncounter = sequelize.define(
     'IdentifiedEncounter',
     {
+      id: {
+        type: DataTypes.VIRTUAL,
+        // field: 'IdentifiedEncounterID',
+        get() {
+          return `${this.IdentifiedEncounterID}`;
+        },
+      },
       IdentifiedEncounterID: {
         type: DataTypes.INTEGER,
         primaryKey: true,

@@ -214,8 +214,6 @@ export const getIdentEncountersperMonth = async (req, res) => {
   const cuurMonth = moment().month() + 1;
   const currYear = moment().year();
 
-  console.log(moment().date());
-
   try {
     for (let i = 0; i < 12; i += 1) {
       const startMonth = moment([currYear - 1, cuurMonth, 1])

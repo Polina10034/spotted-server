@@ -68,7 +68,6 @@ export const setUserAdmin = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { userId } = req.user;
-  console.log(req.body);
   const { firstName, lastName, email } = req.body;
   try {
     const user = await User.update(

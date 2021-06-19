@@ -246,8 +246,8 @@ export const updateDBidentPhoto = async (req, res) => {
         TopSide: req.body.TopSide,
         FirstSystemResultID: req.body.FirstSystemResultID,
         SecoundSystemResultID: req.body.SecoundSystemResultID,
-        EncounterGroupID: req.body.EncounterGroupID,
-        // PathPhoto: url,
+        // EncounterGroupID: req.body.EncounterGroupID,
+        src: url,
         IdentifiedEncounterID: id,
       }, { where: { PathPhoto: url } });
     return successResponse(req, res, {});

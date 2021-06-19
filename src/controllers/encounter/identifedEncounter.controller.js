@@ -35,7 +35,7 @@ export const addIdentifiedEncounter = async (req, res) => {
     payload = {
       LifeStageID,
       Gender: Gender || 'unknown',
-      isAlive,
+      isAlive: isAlive || 1,
       UpdateBy: req.user.id,
       ProfilePicture,
     };
@@ -211,8 +211,10 @@ export const getIdntEncounterPhotosbySides = async (req, res) => {
 export const getIdentEncountersperMonth = async (req, res) => {
   const encMonthData = [];
   const monthsString = [];
-  const cuurMonth = moment().month();
+  const cuurMonth = moment().month() + 1;
   const currYear = moment().year();
+
+  console.log(moment().date());
 
   try {
     for (let i = 0; i < 12; i += 1) {

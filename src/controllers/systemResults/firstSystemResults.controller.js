@@ -2,7 +2,7 @@
 import { FirstSystemResult, BoundingBox, Photo } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
-const { deleteBlobFile, CopyBlobFiles } = require('../../config/azurecontainer');
+const { deleteBlobFile, CopyVideoBlobFiles } = require('../../config/azurecontainer');
 
 export const addFirstSystemResult = async (req, res) => {
   try {
@@ -183,7 +183,7 @@ export const addVideoFirstSystemResults = async (req, res) => {
       // console.log('done1:');
     }
     if (copyPhotosUrls.length > 0) {
-      copiedBlobResult = await CopyBlobFiles(encounterId, copyPhotosUrls);
+      copiedBlobResult = await CopyVideoBlobFiles(encounterId, copyPhotosUrls);
     }
     // console.log(`delete results: ${deleteResult}`);
     const photosResults = await Photo.bulkCreate(photosPayload);

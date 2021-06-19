@@ -79,17 +79,42 @@ const CopyBlobFiles = async (directoryPath, urlArr) => new Promise((resolve, rej
       } else {
         results.push({
           filename: urlSplit[5],
-          url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}_${i}`,
+          url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${fileNameSplit[0]}_${i}.${fileNameSplit[1]}`,
+          // url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}_${i}`,
         });
         resolve({
-          url: `${azureStorageConfig.blobURL}${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}_${i}`,
+          // url: `${azureStorageConfig.blobURL}${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}_${i}`,
+          url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${fileNameSplit[0]}_${i}.${fileNameSplit[1]}`,
           result,
         });
       }
     });
   }
 });
-
+const CopyVideoBlobFiles = async (directoryPath, urlArr) => new Promise((resolve, reject) => {
+  const lenght = urlArr.length;
+  const results = [];
+  for (let i = 0; i < lenght; i += 1) {
+    const url = urlArr[i];
+    const urlSplit = (url).split('/');
+    // const fileNameSplit = urlSplit[5].split('.');
+    const blobService = azureStorage.createBlobService(azureStorageConfig.accountName, azureStorageConfig.accountKey);
+    blobService.startCopyBlob(url, azureStorageConfig.containerName, `${directoryPath}/${urlSplit[5]}`, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        results.push({
+          filename: urlSplit[5],
+          url: `${azureStorageConfig.blobURL}/${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}`,
+        });
+        resolve({
+          url: `${azureStorageConfig.blobURL}${azureStorageConfig.containerName}/${directoryPath}/${urlSplit[5]}`,
+          result,
+        });
+      }
+    });
+  }
+});
 const deleteBlobFile = async (directoryPath, files) => new Promise((resolve, reject) => {
   const lenght = files.length;
   const results = [];
@@ -113,4 +138,5 @@ module.exports = {
   uploadRawFileToBlob,
   CopyBlobFiles,
   deleteBlobFile,
+  CopyVideoBlobFiles,
 };

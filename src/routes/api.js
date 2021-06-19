@@ -33,6 +33,8 @@ router.post(
 );
 
 router.get('/getAllUsers', userController.allUsers);
+router.get('/allUsersEncounters', userController.allUsersEncounters);
+
 router.put('/user', userController.getUser);
 router.put('/setUserAdmin', userController.setUserAdmin);
 router.put('/updateUser', userController.updateUser);

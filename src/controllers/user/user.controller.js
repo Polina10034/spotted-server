@@ -5,6 +5,15 @@ import { successResponse, errorResponse, uniqueId } from '../../helpers';
 
 export const allUsers = async (req, res) => {
   try {
+    const users = await User.findAndCountAll({});
+    return successResponse(req, res, { users });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+export const allUsersEncounters = async (req, res) => {
+  try {
     const users = await User.findAndCountAll({
       include: [
         {
@@ -15,7 +24,6 @@ export const allUsers = async (req, res) => {
           attributes: ['EncounterID'],
         },
       ],
-      // order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
     });
     return successResponse(req, res, { users });
   } catch (error) {

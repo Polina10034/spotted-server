@@ -41,7 +41,7 @@ export const getActiveEncounters = async (req, res) => {
 export const getActiveEncountersperMonth = async (req, res) => {
   const encMonthData = [];
   const monthsString = [];
-  const cuurMonth = moment().month();
+  const cuurMonth = moment().month() + 1;
   const currYear = moment().year();
 
   try {
@@ -118,6 +118,7 @@ export const addEncounter = async (req, res) => {
         MediaType: 1,
         ReportedBy: id,
         Gender,
+        // ReportTypeID: ReportTypeID || 1,
         ReportTypeID: 1,
         IsPregnant: IsPregnant === 'Yes' ? 1 : 0,
         TL,
@@ -205,7 +206,7 @@ export const updateEncounter = async (req, res) => {
         SiteID: req.body.SiteID,
         SpottedCountReported: req.body.SpottedCountReported,
         SpottedCount: req.body.SpottedCount,
-        Verified: req.body.Verified === 'yes' ? 1 : 0,
+        Verified: req.body.Verified || 1,
         MediaType: req.body.MediaType,
         ProfilePicture: req.body.ProfilePicture,
         OriginalID: req.body.OriginalID,

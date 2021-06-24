@@ -225,6 +225,7 @@ export const updateEncounter = async (req, res) => {
         TL: req.body.TL,
         DL: req.body.DL,
         DW: req.body.DW,
+        Photographer: req.body.Photographer,
       },
       { where: { EncounterID: id } },
     );

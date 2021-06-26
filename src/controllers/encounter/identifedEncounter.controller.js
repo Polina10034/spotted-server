@@ -27,7 +27,6 @@ export const addIdentifiedEncounter = async (req, res) => {
     const {
       LifeStageID,
       Gender,
-      IsAlive,
       ProfilePicture,
     } = req.body;
     let payload = {};
@@ -35,7 +34,7 @@ export const addIdentifiedEncounter = async (req, res) => {
     payload = {
       LifeStageID,
       Gender: Gender || 'unknown',
-      IsAlive: IsAlive || 1,
+      IsAlive: 1,
       UpdateBy: req.user.id,
       ProfilePicture,
     };
@@ -76,7 +75,7 @@ export const updateIdentifiedEncounter = async (req, res) => {
       {
         LifeStageID: req.body.LifeStageID,
         Gender: req.body.Gender,
-        IsAlive: req.body.isAlive === 'yes' ? 1 : 0,
+        IsAlive: req.body.IsAlive === 'yes' ? 1 : 0,
         UpdateBy: req.body.UpdateBy,
         ProfilePicture: req.body.ProfilePicture,
         // TL: req.body.TL,

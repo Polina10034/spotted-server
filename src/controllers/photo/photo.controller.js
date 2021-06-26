@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import {
-  Photo, Encounter, Site, FirstSystemResult,
+  Photo, Encounter, Site,
 } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 
@@ -62,16 +62,16 @@ export const getEncounterPhotosforIdentification = async (req, res) => {
   try {
     const { id } = req.query;
     const photos = await Photo.findAll({
-      include: [
-        {
-          model: FirstSystemResult,
-          where: {
-            Count: {
-              [Op.eq]: 1,
-            },
-          },
-        },
-      ],
+      // include: [
+      //   {
+      //     model: FirstSystemResult,
+      //     where: {
+      //       Count: {
+      //         [Op.eq]: 1,
+      //       },
+      //     },
+      //   },
+      // ],
       where: {
         EncounterID: id,
         PathPhoto: {

@@ -62,7 +62,7 @@ export const addVideo = async (req, res) => {
     let payload = {};
     payload = {
       EncounterID: id,
-      VideoPath: `${process.env.AZURE_STORAGE_URL}/${process.env.AZURE_C4.NAME}/${fileName}`,
+      VideoPath: `${process.env.AZURE_STORAGE_URL}/${process.env.AZURE_C4_NAME}/${fileName}`,
     };
     const newVideo = await Video.create(payload);
     return successResponse(req, res, { newVideo });

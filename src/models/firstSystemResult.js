@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const FirstSystemResult = sequelize.define(
-    'FirstSystemResult',
+    "FirstSystemResult",
     {
       FirstSystemResultID: {
         type: DataTypes.INTEGER,
@@ -25,12 +25,9 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      timestamps: false, // TODO remove & test
+      timestamps: false,
       hasTrigger: true,
-    },
+    }
   );
-  // FirstSystemResult.associate = (models) => {
-  //   FirstSystemResult.belongsTo(models.Photo, { foreignKey: 'EncounterID' });
-  // };
   return FirstSystemResult;
 };

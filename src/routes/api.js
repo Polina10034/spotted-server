@@ -22,8 +22,6 @@ const singleFileUpload = multer({ storage: inMemoryStorage });
 
 const router = express.Router();
 
-// // TODO api loggedin  routes
-
 router.get('/me', userController.profile);
 
 router.post(
@@ -52,7 +50,6 @@ router.get('/getActiveEncountersperMonth', encounterController.getActiveEncounte
 router.post('/uploadphoto', singleFileUpload.single('image'), azurePhotoController.imageUpload);
 router.post('/uploadrawphoto', singleFileUpload.single('image'), azurePhotoController.rawImageUpload);
 router.delete('/deletephotofromBlob', azurePhotoController.imageDelete);
-// router.post('/rawImageBlobCopy', azurePhotoController.rawImageCopy);
 router.post('/imageBlobCopy', azurePhotoController.ImageCopy);
 
 router.get('/getAllIdentifiedEncounters', identifiedEncounterController.getAllIdentifiedEncounters);
@@ -91,12 +88,8 @@ router.get('/getMediaTypes', lifeStageController.getMediaTypes);
 
 router.post('/addVideo', videoController.addVideo);
 router.delete('/deleteVideo', videoController.deleteVideo);
-// router.get('/getAllVideos', videoController.getAllVideos);
 router.get('/getEncounterVideos', videoController.getEncounterVideos);
 router.get('/getIdntEncounterVideos', videoController.getIdntEncounterVideos);
-
-// router.get('/getVideo', videoController.getVideo);
-// router.put('/updateVideo', videoController.updateVideo);
 
 router.post('/uploadVideo', singleFileUpload.single('video'), azureVideoController.videoUpload);
 

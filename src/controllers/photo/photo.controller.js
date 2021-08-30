@@ -1,28 +1,27 @@
 /* eslint-disable no-await-in-loop */
-import {
-  Photo, Encounter, Site,
-} from '../../models';
-import { successResponse, errorResponse } from '../../helpers';
+import { Photo, Encounter, Site } from "../../models";
+import { successResponse, errorResponse } from "../../helpers";
 
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
 const { Op } = Sequelize;
 
 export const getAllPhotos = async (req, res) => {
   try {
-    const photos = await Photo.findAndCountAll({
-    });
+    const photos = await Photo.findAndCountAll({});
     return successResponse(req, res, { photos });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
 };
+
+//Get all tagged individuals photos (for statistics)
 export const getAllDetectPhotosCount = async (req, res) => {
   try {
     const photos = await Photo.findAndCountAll({
       where: {
         IdentifiedEncounterID: {
-          [Op.not]: null, // Like: sellDate IS NOT NULL
+          [Op.not]: null,
         },
       },
     });
@@ -33,6 +32,7 @@ export const getAllDetectPhotosCount = async (req, res) => {
   }
 };
 
+//Get all photos of encounter
 export const getEncounterPhotos = async (req, res) => {
   try {
     const { id } = req.query;
@@ -44,12 +44,12 @@ export const getEncounterPhotos = async (req, res) => {
         },
       },
       attributes: [
-        'src',
-        'PhotoID',
-        'FirstSystemResultID',
-        'LeftSide',
-        'RightSide',
-        'TopSide',
+        "src",
+        "PhotoID",
+        "FirstSystemResultID",
+        "LeftSide",
+        "RightSide",
+        "TopSide",
       ],
     });
     return successResponse(req, res, { photos });
@@ -62,29 +62,19 @@ export const getEncounterPhotosforIdentification = async (req, res) => {
   try {
     const { id } = req.query;
     const photos = await Photo.findAll({
-      // include: [
-      //   {
-      //     model: FirstSystemResult,
-      //     where: {
-      //       Count: {
-      //         [Op.eq]: 1,
-      //       },
-      //     },
-      //   },
-      // ],
       where: {
         EncounterID: id,
         PathPhoto: {
-          [Op.not]: null, // Like: sellDate IS NOT NULL
+          [Op.not]: null, 
         },
       },
       attributes: [
-        'src',
-        'PhotoID',
-        'FirstSystemResultID',
-        'LeftSide',
-        'RightSide',
-        'TopSide',
+        "src",
+        "PhotoID",
+        "FirstSystemResultID",
+        "LeftSide",
+        "RightSide",
+        "TopSide",
       ],
     });
     return successResponse(req, res, { photos });
@@ -93,7 +83,6 @@ export const getEncounterPhotosforIdentification = async (req, res) => {
   }
 };
 
-
 export const getIdntEncounterPhotos = async (req, res) => {
   try {
     const { id } = req.query;
@@ -101,10 +90,10 @@ export const getIdntEncounterPhotos = async (req, res) => {
       where: {
         IdentifiedEncounterID: id,
         PathPhoto: {
-          [Op.not]: null, // Like: sellDate IS NOT NULL
+          [Op.not]: null,
         },
       },
-      attributes: ['src'],
+      attributes: ["src"],
     });
     return successResponse(req, res, { photos });
   } catch (error) {
@@ -112,6 +101,7 @@ export const getIdntEncounterPhotos = async (req, res) => {
   }
 };
 
+//Get tagged identity (individual) data about sites of reported encounters (for statistics)
 export const getIdntEncounterPhotosSites = async (req, res) => {
   try {
     const { id } = req.query;
@@ -122,14 +112,12 @@ export const getIdntEncounterPhotosSites = async (req, res) => {
           where: {
             IsActive: true,
           },
-          attributes: ['SiteID', 'EncounterID', 'EncounterDate'],
+          attributes: ["SiteID", "EncounterID", "EncounterDate"],
           include: {
             model: Site,
           },
-          group: ['EncounterID'],
-
+          group: ["EncounterID"],
         },
-
       ],
       where: {
         IdentifiedEncounterID: id,
@@ -137,18 +125,19 @@ export const getIdntEncounterPhotosSites = async (req, res) => {
           [Op.not]: null,
         },
       },
-      attributes: ['src', 'IdentifiedEncounterID', 'EncounterID'],
+      attributes: ["src", "IdentifiedEncounterID", "EncounterID"],
     });
     return successResponse(req, res, { photos });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
 };
+
 export const updatePhotoSide = async (req, res) => {
   try {
     const { src } = req.body;
-    const updateStatus = await Photo
-      .update({
+    const updateStatus = await Photo.update(
+      {
         EncounterID: req.body.EncounterID,
         CountPerImage: req.body.CountPerImage,
         UploadDate: req.body.UploadDate,
@@ -159,18 +148,19 @@ export const updatePhotoSide = async (req, res) => {
         FirstSystemResultID: req.body.FirstSystemResultID,
         SecoundSystemResultID: req.body.SecoundSystemResultID,
         EncounterGroupID: req.body.EncounterGroupID,
-        // PathPhoto: req.body.PathPhoto,
-      }, { where: { PathPhoto: src } });
+      },
+      { where: { PathPhoto: src } }
+    );
     return successResponse(req, res, { updateStatus });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
 };
+
+//Add photo information to DB
 export const addPhoto = async (req, res) => {
   try {
-    const {
-      id, count, url,
-    } = req.body;
+    const { id, count, url } = req.body;
     let payload = {};
     payload = {
       EncounterID: id,
@@ -188,7 +178,6 @@ export const addPhoto = async (req, res) => {
   }
 };
 
-
 export const getPhotoByUrl = async (req, res) => {
   try {
     const { PhotoPath } = req.body;
@@ -198,6 +187,7 @@ export const getPhotoByUrl = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
 export const getPhoto = async (req, res) => {
   try {
     const { photoId } = req.body;
@@ -211,9 +201,8 @@ export const getPhoto = async (req, res) => {
 export const updatePhoto = async (req, res) => {
   try {
     const { id } = req.query;
-    // const photo = await Photo.findOne({ where: { PhotoID: id } });
-    await Photo
-      .update({
+    await Photo.update(
+      {
         EncounterID: req.body.EncounterID,
         CountPerImage: req.body.CountPerImage,
         UploadDate: req.body.UploadDate,
@@ -225,18 +214,20 @@ export const updatePhoto = async (req, res) => {
         SecoundSystemResultID: req.body.SecoundSystemResultID,
         EncounterGroupID: req.body.EncounterGroupID,
         PathPhoto: req.body.PathPhoto,
-      }, { where: { PhotoID: id } });
+      },
+      { where: { PhotoID: id } }
+    );
     return successResponse(req, res, {});
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
 };
+
 export const updateDBidentPhoto = async (req, res) => {
   try {
     const { id, url } = req.body;
-    // const photo = await Photo.findOne({ where: { PhotoID: id } });
-    await Photo
-      .update({
+    await Photo.update(
+      {
         EncounterID: req.body.EncounterID,
         CountPerImage: req.body.CountPerImage,
         UploadDate: req.body.UploadDate,
@@ -246,10 +237,11 @@ export const updateDBidentPhoto = async (req, res) => {
         TopSide: req.body.TopSide,
         FirstSystemResultID: req.body.FirstSystemResultID,
         SecoundSystemResultID: req.body.SecoundSystemResultID,
-        // EncounterGroupID: req.body.EncounterGroupID,
         src: url,
         IdentifiedEncounterID: id,
-      }, { where: { PathPhoto: url } });
+      },
+      { where: { PathPhoto: url } }
+    );
     return successResponse(req, res, {});
   } catch (error) {
     return errorResponse(req, res, error.message);
@@ -267,9 +259,10 @@ export const deletePhoto = async (req, res) => {
   }
 };
 
+//Get total photos per side
 export const getPhotosbySides = async (req, res) => {
   const PhotosData = [];
-  const sides = ['Right', 'Left', 'Top'];
+  const sides = ["Right", "Left", "Top"];
   try {
     const RightPhotos = await Photo.findAndCountAll({
       where: {
@@ -278,7 +271,7 @@ export const getPhotosbySides = async (req, res) => {
           [Op.not]: null,
         },
       },
-      attributes: ['src', 'RightSide'],
+      attributes: ["src", "RightSide"],
     });
     PhotosData.push(RightPhotos.count);
     const LeftPhotos = await Photo.findAndCountAll({
@@ -288,7 +281,7 @@ export const getPhotosbySides = async (req, res) => {
           [Op.not]: null,
         },
       },
-      attributes: ['src', 'LeftSide'],
+      attributes: ["src", "LeftSide"],
     });
     PhotosData.push(LeftPhotos.count);
 
@@ -299,7 +292,7 @@ export const getPhotosbySides = async (req, res) => {
           [Op.not]: null,
         },
       },
-      attributes: ['src', 'TopSide'],
+      attributes: ["src", "TopSide"],
     });
     PhotosData.push(TopPhotos.count);
 

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const ManualResult = sequelize.define(
-    'ManualResult',
+    "ManualResult",
     {
       ManualResultID: {
         type: DataTypes.INTEGER,
@@ -29,12 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: false,
       hasTrigger: true,
-
-    },
-
+    }
   );
-    // IdentifiedEncounter.associate = function (models) {
-    //   // associations can be defined here
-    // };
   return ManualResult;
 };

@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const x = {
   development: {
@@ -6,10 +6,6 @@ const x = {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     server: process.env.DB_SERVER,
-    // server: process.env.DB_SERVER,
-    // username: process.env.DB_USER,
-    // password: process.env.DB_PASS,
-    // database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
     dialectOptions: {

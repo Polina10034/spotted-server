@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Species = sequelize.define(
-    'Species',
+    "Species",
     {
       SpeciesID: {
         type: DataTypes.INTEGER,
@@ -16,10 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-    },
+    }
   );
-    // Species.associate = function (models) {
-    //   // associations can be defined here
-    // };
+
   return Species;
 };

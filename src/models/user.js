@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'User',
+    "User",
     {
       firstName: {
         type: DataTypes.STRING,
@@ -34,17 +34,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       defaultScope: {
-        attributes: { exclude: ['password', 'verifyToken'] },
+        attributes: { exclude: ["password", "verifyToken"] },
       },
       scopes: {
         withSecretColumns: {
-          attributes: { include: ['password', 'verifyToken', 'isAdmin'] },
+          attributes: { include: ["password", "verifyToken", "isAdmin"] },
         },
       },
-    },
+    }
   );
   User.associate = (models) => {
-    User.hasMany(models.Encounter, { foreignKey: 'ReportedBy' });
+    User.hasMany(models.Encounter, { foreignKey: "ReportedBy" });
   };
 
   return User;

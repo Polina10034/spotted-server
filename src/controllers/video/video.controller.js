@@ -5,17 +5,6 @@ const Sequelize = require('sequelize');
 
 const { Op } = Sequelize;
 
-// export const getAllVedio = async (req, res) => {
-//   try {
-//     const Vedio = await Photo.findAndCountAll({
-//     //   order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
-//     });
-//     return successResponse(req, res, { vedio });
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
-
 export const getEncounterVideos = async (req, res) => {
   try {
     const limit = 1;
@@ -43,7 +32,7 @@ export const getIdntEncounterVideos = async (req, res) => {
       where: {
         EncounterID: id,
         VideoPath: {
-          [Op.not]: null, // Like: sellDate IS NOT NULL
+          [Op.not]: null, 
         },
       },
       attributes: ['src'],

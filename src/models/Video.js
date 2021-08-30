@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Video = sequelize.define(
-    'Video',
+    "Video",
     {
       VideoID: {
         type: DataTypes.INTEGER,
@@ -23,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-    },
-
+    }
   );
   return Video;
 };

@@ -1,10 +1,14 @@
 /* eslint-disable max-len */
+
+//function for files operations - defined in other file and required here
 const {
-  uploadFileToBlob, uploadRawFileToBlob, CopyBlobFiles, deleteBlobFile,
-} = require('../../config/azurecontainer');
+  uploadFileToBlob,
+  uploadRawFileToBlob,
+  CopyBlobFiles,
+  deleteBlobFile,
+} = require("../../config/azurecontainer");
 
 module.exports = {
-
   async imageUpload(req, res, next) {
     try {
       const encounterId = req.query.id;
@@ -28,7 +32,6 @@ module.exports = {
     }
   },
 
-
   async rawImageUpload(req, res, next) {
     try {
       const encounterId = req.query.id;
@@ -39,17 +42,6 @@ module.exports = {
       return error;
     }
   },
-
-  // async rawImageCopy(req, res, next) {
-  //   try {
-  //     const encounterId = req.query.id;
-  //     const status = await CopyBlobFiles(encounterId, req.urlArr); // encounterId is a directory in the Azure container for encounter images
-  //     return res.json(status);
-  //   } catch (error) {
-  //     next(error);
-  //     return error;
-  //   }
-  // },
 
   async ImageCopy(req, res, next) {
     try {

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Photo = sequelize.define(
-    'Photo',
+    "Photo",
     {
       PhotoID: {
         type: DataTypes.INTEGER,
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       src: {
         type: DataTypes.STRING,
-        field: 'PathPhoto',
+        field: "PathPhoto",
       },
       IdentifiedEncounterID: {
         type: DataTypes.INTEGER,
@@ -45,17 +45,21 @@ module.exports = (sequelize, DataTypes) => {
       UpdatedAt: {
         type: DataTypes.DATE,
       },
-    }, {
+    },
+    {
       timestamps: false,
       hasTrigger: true,
-
-    },
+    }
   );
   Photo.associate = (models) => {
-    Photo.belongsTo(models.Encounter, { foreignKey: 'EncounterID' });
-    Photo.belongsTo(models.IdentifiedEncounter, { foreignKey: 'IdentifiedEncounterID' });
+    Photo.belongsTo(models.Encounter, { foreignKey: "EncounterID" });
+    Photo.belongsTo(models.IdentifiedEncounter, {
+      foreignKey: "IdentifiedEncounterID",
+    });
 
-    Photo.belongsTo(models.FirstSystemResult, { foreignKey: 'FirstSystemResultID' });
+    Photo.belongsTo(models.FirstSystemResult, {
+      foreignKey: "FirstSystemResultID",
+    });
   };
   return Photo;
 };

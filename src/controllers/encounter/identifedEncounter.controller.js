@@ -1,21 +1,16 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable max-len */
-import {
-  IdentifiedEncounter, User, Photo, LifeStage,
-} from '../../models';
-import { successResponse, errorResponse } from '../../helpers';
+import { IdentifiedEncounter, User, Photo, LifeStage } from "../../models";
+import { successResponse, errorResponse } from "../../helpers";
 
-const moment = require('moment');
-const Sequelize = require('sequelize');
+const moment = require("moment");
+const Sequelize = require("sequelize");
 
 const { Op } = Sequelize;
 
 export const getAllIdentifiedEncounters = async (req, res) => {
   try {
-    // const page = req.params.page || 1;
-    const identifiedEncounters = await IdentifiedEncounter.findAndCountAll({
-      // order: [['UpdatedAt', 'DESC']],
-    });
+    const identifiedEncounters = await IdentifiedEncounter.findAndCountAll({});
     return successResponse(req, res, { identifiedEncounters });
   } catch (error) {
     return errorResponse(req, res, error.message);
@@ -24,16 +19,12 @@ export const getAllIdentifiedEncounters = async (req, res) => {
 
 export const addIdentifiedEncounter = async (req, res) => {
   try {
-    const {
-      LifeStageID,
-      Gender,
-      ProfilePicture,
-    } = req.body;
+    const { LifeStageID, Gender, ProfilePicture } = req.body;
     let payload = {};
 
     payload = {
       LifeStageID,
-      Gender: Gender || 'unknown',
+      Gender: Gender || "unknown",
       IsAlive: 1,
       UpdateBy: req.user.id,
       ProfilePicture,
@@ -45,7 +36,7 @@ export const addIdentifiedEncounter = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
-
+//Get tagget inividuals and reporters name (JOIN)
 export const getIdentifiedEncounter = async (req, res) => {
   try {
     const { id } = req.query;
@@ -53,11 +44,10 @@ export const getIdentifiedEncounter = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['firstName'],
+          attributes: ["firstName"],
         },
         {
           model: LifeStage,
-          // attributes: ['firstName'],
         },
       ],
       where: { IdentifiedEncounterID: id },
@@ -75,21 +65,11 @@ export const updateIdentifiedEncounter = async (req, res) => {
       {
         LifeStageID: req.body.LifeStageID,
         Gender: req.body.Gender,
-        IsAlive: req.body.IsAlive === 'yes' ? 1 : 0,
+        IsAlive: req.body.IsAlive === "yes" ? 1 : 0,
         UpdateBy: req.body.UpdateBy,
         ProfilePicture: req.body.ProfilePicture,
-        // TL: req.body.TL,
-        // DL: req.body.DL,
-        // DW: req.body.DW,
-        // MaxDepth: req.body.MaxDepth,
-        // Distance: req.body.Distance,
-        // Temp: req.body.Temp,
-        // Description: req.body.Description,
-        // Link: req.body.Link,
-        // Photographer: req.body.Photographer,
-
       },
-      { where: { IdentifiedEncounterID: id } },
+      { where: { IdentifiedEncounterID: id } }
     );
     return successResponse(req, res, {});
   } catch (error) {
@@ -122,6 +102,7 @@ export const getIdntEncounterPhotos = async (req, res) => {
   }
 };
 
+//Get tagget individual profile with photos data, reporter name, life stage title (JOIN on 3 tables)
 export const getIdntEncountersPhotos = async (req, res) => {
   try {
     const { individualids } = req.body;
@@ -129,15 +110,22 @@ export const getIdntEncountersPhotos = async (req, res) => {
       include: [
         {
           model: Photo,
-          attributes: ['src', 'IdentifiedEncounterID', 'FirstSystemResultID', 'SecoundSystemResultID', 'PhotoID', 'EncounterID'],
+          attributes: [
+            "src",
+            "IdentifiedEncounterID",
+            "FirstSystemResultID",
+            "SecoundSystemResultID",
+            "PhotoID",
+            "EncounterID",
+          ],
         },
         {
           model: User,
-          attributes: ['firstName'],
+          attributes: ["firstName"],
         },
         {
           model: LifeStage,
-          attributes: ['Stage'],
+          attributes: ["Stage"],
         },
       ],
       where: { IdentifiedEncounterID: individualids },
@@ -148,9 +136,10 @@ export const getIdntEncountersPhotos = async (req, res) => {
   }
 };
 
+//Get total number of photos for each side (for statistics dashboard)
 export const getIdntEncounterPhotosbySides = async (req, res) => {
   const IdntEncountersCount = [];
-  const sides = ['Right', 'Left', 'Top'];
+  const sides = ["Right", "Left", "Top"];
 
   try {
     const RightPhotos = await IdentifiedEncounter.findAndCountAll({
@@ -163,7 +152,7 @@ export const getIdntEncounterPhotosbySides = async (req, res) => {
               [Op.not]: null,
             },
           },
-          attributes: ['src', 'RightSide', 'IdentifiedEncounterID'],
+          attributes: ["src", "RightSide", "IdentifiedEncounterID"],
         },
       ],
     });
@@ -179,7 +168,7 @@ export const getIdntEncounterPhotosbySides = async (req, res) => {
               [Op.not]: null,
             },
           },
-          attributes: ['src', 'LeftSide', 'IdentifiedEncounterID'],
+          attributes: ["src", "LeftSide", "IdentifiedEncounterID"],
         },
       ],
     });
@@ -195,7 +184,7 @@ export const getIdntEncounterPhotosbySides = async (req, res) => {
               [Op.not]: null,
             },
           },
-          attributes: ['src', 'TopSide', 'IdentifiedEncounterID'],
+          attributes: ["src", "TopSide", "IdentifiedEncounterID"],
         },
       ],
     });
@@ -207,6 +196,7 @@ export const getIdntEncounterPhotosbySides = async (req, res) => {
   }
 };
 
+//Get all tagged individuals in last 12 months (for statistics dashboard)
 export const getIdentEncountersperMonth = async (req, res) => {
   const encMonthData = [];
   const monthsString = [];
@@ -216,13 +206,13 @@ export const getIdentEncountersperMonth = async (req, res) => {
   try {
     for (let i = 0; i < 12; i += 1) {
       const startMonth = moment([currYear - 1, cuurMonth, 1])
-        .add(i, 'months')
+        .add(i, "months")
         .toDate();
       const startMonthString = moment([currYear - 1, cuurMonth, 1])
-        .add(i, 'months')
-        .format('MMM');
+        .add(i, "months")
+        .format("MMM");
       const endMonth = moment([currYear - 1, cuurMonth, 1])
-        .add(i + 1, 'months')
+        .add(i + 1, "months")
         .toDate();
 
       const encounters = await IdentifiedEncounter.findAndCountAll({

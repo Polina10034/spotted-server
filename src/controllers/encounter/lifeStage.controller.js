@@ -1,8 +1,9 @@
 /* eslint-disable import/prefer-default-export */
-import { LifeStage, MediaType } from '../../models';
+import { LifeStage, MediaType } from "../../models";
 
-import { successResponse, errorResponse } from '../../helpers';
+import { successResponse, errorResponse } from "../../helpers";
 
+//Get life stage of bluespotted types 
 export const getAllLifeStage = async (req, res) => {
   try {
     const lifeStage = await LifeStage.findAndCountAll({});
@@ -11,6 +12,8 @@ export const getAllLifeStage = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+//Get Media types 
 export const getMediaTypes = async (req, res) => {
   try {
     const MediaTypes = await MediaType.findAndCountAll({});

@@ -1,9 +1,9 @@
 /* eslint-disable import/prefer-default-export */
-import { ManualResult } from '../../models';
-import { successResponse, errorResponse } from '../../helpers';
+import { ManualResult } from "../../models";
+import { successResponse, errorResponse } from "../../helpers";
 
+//Add researcher manual confirmation of individual detection  
 export const addManualResult = async (req, res) => {
-  console.log(req.user);
   let payload = {};
   try {
     const { userId } = req.user;

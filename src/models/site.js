@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Site = sequelize.define(
-    'Site',
+    "Site",
     {
       SiteID: {
         type: DataTypes.INTEGER,
@@ -16,11 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-    },
-
+    }
   );
-  // Site.associate = (models) => {
-  //   //  Site.belongsTo(models.Encounter, { foreignKey: 'SiteID' });
-  // };
   return Site;
 };

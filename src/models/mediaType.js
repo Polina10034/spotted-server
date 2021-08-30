@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const MediaType = sequelize.define(
-    'MediaType',
+    "MediaType",
     {
       MediaTypeID: {
         type: DataTypes.INTEGER,
@@ -13,11 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-    },
-
+    }
   );
-    // IdentifiedEncounter.associate = function (models) {
-    //   // associations can be defined here
-    // };
+
   return MediaType;
 };

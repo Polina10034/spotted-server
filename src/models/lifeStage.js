@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const LifeStage = sequelize.define(
-    'LifeStage',
+    "LifeStage",
     {
       LifeStageID: {
         type: DataTypes.INTEGER,
@@ -13,11 +13,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-    },
-
+    }
   );
   LifeStage.associate = (models) => {
-    LifeStage.belongsTo(models.IdentifiedEncounter, { foreignKey: 'LifeStageID' });
+    LifeStage.belongsTo(models.IdentifiedEncounter, {
+      foreignKey: "LifeStageID",
+    });
   };
   return LifeStage;
 };

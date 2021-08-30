@@ -1,10 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
   const IdentifiedEncounter = sequelize.define(
-    'IdentifiedEncounter',
+    "IdentifiedEncounter",
     {
       id: {
         type: DataTypes.VIRTUAL,
-        // field: 'IdentifiedEncounterID',
         get() {
           return `${this.IdentifiedEncounterID}`;
         },
@@ -14,12 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      // Photographer: {
-      //   type: DataTypes.STRING,
-      // },
-      // EncounterID: {
-      //   type: DataTypes.INTEGER,
-      // },
       LifeStageID: {
         type: DataTypes.INTEGER,
       },
@@ -29,30 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       IsAlive: {
         type: DataTypes.BOOLEAN,
       },
-      // TL: {
-      //   type: DataTypes.INTEGER,
-      // },
-      // DL: {
-      //   type: DataTypes.INTEGER,
-      // },
-      // DW: {
-      //   type: DataTypes.INTEGER,
-      // },
-      // Distance: {
-      //   type: DataTypes.INTEGER,
-      // },
-      // MaxDepth: {
-      //   type: DataTypes.INTEGER,
-      // },
-      // Temp: {
-      //   type: DataTypes.INTEGER,
-      // },
-      // Description: {
-      //   type: DataTypes.STRING,
-      // },
-      // Link: {
-      //   type: DataTypes.STRING,
-      // },
       ProfilePicture: {
         type: DataTypes.STRING,
       },
@@ -65,23 +34,25 @@ module.exports = (sequelize, DataTypes) => {
       UpdatedBy: {
         type: DataTypes.INTEGER,
       },
-    }, {
+    },
+    {
       classMethods: {
         associate(models) {
-          // this.hasMany(models.Photo, { foreignKey: 'IdentifiedEncounterID' });
-          this.belongsTo(models.User, { foreignKey: 'UpdatedBy' });
+          this.belongsTo(models.User, { foreignKey: "UpdatedBy" });
         },
       },
       timestamps: false,
       hasTrigger: true,
-
-    },
-
+    }
   );
   IdentifiedEncounter.associate = (models) => {
-    IdentifiedEncounter.belongsTo(models.User, { foreignKey: 'UpdatedBy' });
-    IdentifiedEncounter.belongsTo(models.LifeStage, { foreignKey: 'LifeStageID' });
-    IdentifiedEncounter.hasMany(models.Photo, { foreignKey: 'IdentifiedEncounterID' });
+    IdentifiedEncounter.belongsTo(models.User, { foreignKey: "UpdatedBy" });
+    IdentifiedEncounter.belongsTo(models.LifeStage, {
+      foreignKey: "LifeStageID",
+    });
+    IdentifiedEncounter.hasMany(models.Photo, {
+      foreignKey: "IdentifiedEncounterID",
+    });
   };
   return IdentifiedEncounter;
 };

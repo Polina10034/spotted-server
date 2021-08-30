@@ -1,11 +1,9 @@
 /* eslint-disable no-await-in-loop */
-import {
-  Encounter, User, Site, ReportType, MediaType,
-} from '../../models';
-import { successResponse, errorResponse } from '../../helpers';
+import { Encounter, User, Site, ReportType, MediaType } from "../../models";
+import { successResponse, errorResponse } from "../../helpers";
 
-const moment = require('moment');
-const Sequelize = require('sequelize');
+const moment = require("moment");
+const Sequelize = require("sequelize");
 
 const { Op } = Sequelize;
 
@@ -28,7 +26,7 @@ export const getActiveEncounters = async (req, res) => {
         IsActive: true,
         SiteID: {
           [Op.gt]: 0,
-          [Op.not]: null, // Like: sellDate IS NOT NULL
+          [Op.not]: null,
         },
       },
     });
@@ -38,6 +36,7 @@ export const getActiveEncounters = async (req, res) => {
   }
 };
 
+//Get all active encounter in last 12 months - for statistics 
 export const getActiveEncountersperMonth = async (req, res) => {
   const encMonthData = [];
   const monthsString = [];
@@ -47,13 +46,13 @@ export const getActiveEncountersperMonth = async (req, res) => {
   try {
     for (let i = 0; i < 12; i += 1) {
       const startMonth = moment([currYear - 1, cuurMonth, 1])
-        .add(i, 'months')
+        .add(i, "months")
         .toDate();
       const startMonthString = moment([currYear - 1, cuurMonth, 1])
-        .add(i, 'months')
-        .format('MMM');
+        .add(i, "months")
+        .format("MMM");
       const endMonth = moment([currYear - 1, cuurMonth, 1])
-        .add(i + 1, 'months')
+        .add(i + 1, "months")
         .toDate();
 
       const encounters = await Encounter.findAndCountAll({
@@ -79,7 +78,6 @@ export const getUserEncounters = async (req, res) => {
   try {
     const encounters = await Encounter.findAndCountAll({
       where: { ReportedBy: id, IsActive: true },
-      // order: [['CreatedAt', 'DESC']],
     });
     return successResponse(req, res, { encounters });
   } catch (error) {
@@ -119,10 +117,9 @@ export const addEncounter = async (req, res) => {
         MediaTypeID: 1,
         ReportedBy: id,
         Gender,
-        // ReportTypeID: ReportTypeID || 1,
         ReportTypeID: 1,
         OriginalID,
-        IsPregnant: IsPregnant === 'Yes' ? 1 : 0,
+        IsPregnant: IsPregnant === "Yes" ? 1 : 0,
         TL,
         DL,
         DW,
@@ -143,7 +140,7 @@ export const addEncounter = async (req, res) => {
         MediaTypeID: 1,
         ReportTypeID: 1,
         Gender,
-        IsPregnant: IsPregnant === 'Yes' ? 1 : 0,
+        IsPregnant: IsPregnant === "Yes" ? 1 : 0,
         TL,
         DL,
         DW,
@@ -170,7 +167,7 @@ export const getEncounter = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['firstName'],
+          attributes: ["firstName"],
         },
         {
           model: ReportType,
@@ -183,25 +180,26 @@ export const getEncounter = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+//Update encounter active status (when user deletes encounter isActive=false)
 export const updateEncounterIsActive = async (req, res) => {
   try {
     const { id, isActive } = req.body;
-    // const encounter = await Encounter.findOne({ where: { EncounterID: id } });
     await Encounter.update(
       {
         IsActive: isActive,
       },
-      { where: { EncounterID: id } },
+      { where: { EncounterID: id } }
     );
     return successResponse(req, res, {});
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
 };
+
 export const updateEncounter = async (req, res) => {
   try {
     const { id } = req.query;
-    // const encounter = await Encounter.findOne({ where: { EncounterID: id } });
     await Encounter.update(
       {
         EncounterDate: req.body.EncounterDate,
@@ -213,7 +211,7 @@ export const updateEncounter = async (req, res) => {
         MediaTypeID: req.body.MediaType,
         ProfilePicture: req.body.ProfilePicture,
         OriginalID: req.body.OriginalID,
-        IsPregnant: req.body.IsPregnant === 'yes' ? 1 : 0,
+        IsPregnant: req.body.IsPregnant === "yes" ? 1 : 0,
         Gender: req.body.Gender,
         UpdatedBy: req.user ? req.user.id : null,
         MaxDepth: req.body.MaxDepth,
@@ -227,7 +225,7 @@ export const updateEncounter = async (req, res) => {
         DW: req.body.DW,
         Photographer: req.body.Photographer,
       },
-      { where: { EncounterID: id } },
+      { where: { EncounterID: id } }
     );
     return successResponse(req, res, {});
   } catch (error) {

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const ReportType = sequelize.define(
-    'ReportType',
+    "ReportType",
     {
       ReportTypeID: {
         type: DataTypes.INTEGER,
@@ -12,12 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      timestamps: false, // TODO remove & test
+      timestamps: false,
       hasTrigger: true,
-    },
+    }
   );
-  // ReportType.associate = (models) => {
-  //   // ReportType.belongsTo(models.Encounter, { foreignKey: 'ReportTypeID' });
-  // };
+
   return ReportType;
 };

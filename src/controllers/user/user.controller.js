@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
-import { User, Encounter } from '../../models';
-import { successResponse, errorResponse, uniqueId } from '../../helpers';
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import { User, Encounter } from "../../models";
+import { successResponse, errorResponse, uniqueId } from "../../helpers";
 
 export const allUsers = async (req, res) => {
   try {
@@ -12,6 +12,7 @@ export const allUsers = async (req, res) => {
   }
 };
 
+//Get number of user reported encounters
 export const allUsersEncounters = async (req, res) => {
   try {
     const users = await User.findAndCountAll({
@@ -21,7 +22,7 @@ export const allUsersEncounters = async (req, res) => {
           where: {
             IsActive: true,
           },
-          attributes: ['EncounterID'],
+          attributes: ["EncounterID"],
         },
       ],
     });
@@ -31,6 +32,7 @@ export const allUsersEncounters = async (req, res) => {
   }
 };
 
+//Get user data by id
 export const getUser = async (req, res) => {
   const { userId } = req.user;
   try {
@@ -56,10 +58,7 @@ export const profile = async (req, res) => {
 export const setUserAdmin = async (req, res) => {
   const { email } = req.body;
   try {
-    const user = await User.update(
-      { isAdmin: 1 },
-      { where: { email } },
-    );
+    const user = await User.update({ isAdmin: 1 }, { where: { email } });
     return successResponse(req, res, { user });
   } catch (error) {
     return errorResponse(req, res, error.message);
@@ -72,7 +71,7 @@ export const updateUser = async (req, res) => {
   try {
     const user = await User.update(
       { firstName, lastName, email },
-      { where: { id: userId } },
+      { where: { id: userId } }
     );
     return successResponse(req, res, { user });
   } catch (error) {
@@ -82,20 +81,15 @@ export const updateUser = async (req, res) => {
 
 export const register = async (req, res) => {
   try {
-    const {
-      email, password, firstName, lastName,
-    } = req.body;
+    const { email, password, firstName, lastName } = req.body;
 
-    const user = await User.scope('withSecretColumns').findOne({
+    const user = await User.scope("withSecretColumns").findOne({
       where: { email },
     });
     if (user) {
-      throw new Error('User already exists with same email');
+      throw new Error("User already exists with same email");
     }
-    const reqPass = crypto
-      .createHash('md5')
-      .update(password)
-      .digest('hex');
+    const reqPass = crypto.createHash("md5").update(password).digest("hex");
     const payload = {
       email,
       firstName,
@@ -115,18 +109,18 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const user = await User.scope('withSecretColumns').findOne({
+    const user = await User.scope("withSecretColumns").findOne({
       where: { email: req.body.email },
     });
     if (!user) {
-      throw new Error('Incorrect Email Id/Password');
+      throw new Error("Incorrect Email Id/Password");
     }
     const reqPass = crypto
-      .createHash('md5')
-      .update(req.body.password || '')
-      .digest('hex');
+      .createHash("md5")
+      .update(req.body.password || "")
+      .digest("hex");
     if (reqPass !== user.password) {
-      throw new Error('Incorrect Email Id/Password');
+      throw new Error("Incorrect Email Id/Password");
     }
     const token = jwt.sign(
       {
@@ -136,7 +130,7 @@ export const login = async (req, res) => {
           createdAt: new Date(),
         },
       },
-      process.env.SECRET,
+      process.env.SECRET
     );
     delete user.dataValues.password;
     return successResponse(req, res, { user, token });
@@ -148,22 +142,22 @@ export const login = async (req, res) => {
 export const changePassword = async (req, res) => {
   try {
     const { userId } = req.user;
-    const user = await User.scope('withSecretColumns').findOne({
+    const user = await User.scope("withSecretColumns").findOne({
       where: { id: userId },
     });
 
     const reqPass = crypto
-      .createHash('md5')
+      .createHash("md5")
       .update(req.body.oldPassword)
-      .digest('hex');
+      .digest("hex");
     if (reqPass !== user.password) {
-      throw new Error('Old password is incorrect');
+      throw new Error("Old password is incorrect");
     }
 
     const newPass = crypto
-      .createHash('md5')
+      .createHash("md5")
       .update(req.body.newPassword)
-      .digest('hex');
+      .digest("hex");
 
     await User.update({ password: newPass }, { where: { id: user.id } });
     return successResponse(req, res, {});

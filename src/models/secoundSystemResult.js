@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const SecoundSystemResult = sequelize.define(
-    'SecoundSystemResult',
+    "SecoundSystemResult",
     {
       SecoundSystemResultID: {
         type: DataTypes.INTEGER,
@@ -26,12 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: false,
       hasTrigger: true,
-
-    },
-
+    }
   );
-    // SecoundSystemResult.associate = function (models) {
-    //   // associations can be defined here
-    // };
+
   return SecoundSystemResult;
 };

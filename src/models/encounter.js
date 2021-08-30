@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Encounter = sequelize.define(
-    'Encounter',
+    "Encounter",
     {
       id: {
         type: DataTypes.VIRTUAL,
@@ -96,17 +96,16 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      timestamps: false, // TODO remove & test
+      timestamps: false,
       hasTrigger: true,
-    },
-
+    }
   );
 
   Encounter.associate = (models) => {
-    Encounter.belongsTo(models.Site, { foreignKey: 'SiteID' });
-    Encounter.belongsTo(models.User, { foreignKey: 'ReportedBy' });
-    Encounter.belongsTo(models.MediaType, { foreignKey: 'MediaTypeID' });
-    Encounter.belongsTo(models.ReportType, { foreignKey: 'ReportTypeID' });
+    Encounter.belongsTo(models.Site, { foreignKey: "SiteID" });
+    Encounter.belongsTo(models.User, { foreignKey: "ReportedBy" });
+    Encounter.belongsTo(models.MediaType, { foreignKey: "MediaTypeID" });
+    Encounter.belongsTo(models.ReportType, { foreignKey: "ReportTypeID" });
   };
 
   return Encounter;

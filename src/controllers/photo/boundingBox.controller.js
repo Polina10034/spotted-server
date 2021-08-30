@@ -1,11 +1,10 @@
-import { BoundingBox } from '../../models';
-import { successResponse, errorResponse } from '../../helpers';
+import { BoundingBox } from "../../models";
+import { successResponse, errorResponse } from "../../helpers";
 
+//Add (create) new bounding box of a photo detected by species detection component
 export const addBoundingBox = async (req, res) => {
   try {
-    const {
-      confidences, photoId, x, y, w, h, resultsID,
-    } = req.body;
+    const { confidences, photoId, x, y, w, h, resultsID } = req.body;
     let payload = {};
     payload = {
       Confidence: confidences,
@@ -23,40 +22,29 @@ export const addBoundingBox = async (req, res) => {
   }
 };
 
-
+//Get single photo bounding box
 export const getBoundingBox = async (req, res) => {
   try {
     const { boundingBoxId } = req.body;
-    const boundingBox = await BoundingBox.findOne({ where: { BoundingBoxID: boundingBoxId } });
+    const boundingBox = await BoundingBox.findOne({
+      where: { BoundingBoxID: boundingBoxId },
+    });
     return successResponse(req, res, { boundingBox });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
 };
 
+//Get photos bounding boxes
 export const getPhotosBoundingBoxes = async (req, res) => {
   try {
     const { photosId } = req.body;
-    // console.log(photosId);
-    // const lenght = photosId.length;
-    // for (let i = 0; i < lenght; i += 1) {
-    //   const boundingBox = await BoundingBox.findOne({ where: { BoundingBoxID: boundingBoxId } });
-    // }
-
-    const boundingBoxes = await BoundingBox.findAll({ where: { PhotoID: photosId } });
+    const boundingBoxes = await BoundingBox.findAll({
+      where: { PhotoID: photosId },
+    });
     return successResponse(req, res, { boundingBoxes });
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
 };
 
-// export const getPhotosandBoundingBox = async (req, res) => {
-//   try {
-//     const { boundingBoxId } = req.body;
-//     const boundingBox = await BoundingBox.findAll({
-//       where: { BoundingBoxID: boundingBoxId } });
-//     return successResponse(req, res, { boundingBox });
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };

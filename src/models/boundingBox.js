@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const BoundingBox = sequelize.define(
-    'BoundingBox',
+    "BoundingBox",
     {
       BoundingBoxID: {
         type: DataTypes.INTEGER,
@@ -28,22 +28,19 @@ module.exports = (sequelize, DataTypes) => {
       },
       Confidence: {
         type: DataTypes.INTEGER,
-
       },
-    }, {
+    },
+    {
       timestamps: false,
       classMethods: {
         associate(models) {
-          BoundingBox.belongsTo(models.Photos, { targetKey: 'PhotoID', foreignKey: 'PhotoID' });
-
-          // BoundingBox.belongsTo(models.photos, { as: 'boundingBox', foreignKey: 'PhotoID' });
+          BoundingBox.belongsTo(models.Photos, {
+            targetKey: "PhotoID",
+            foreignKey: "PhotoID",
+          });
         },
       },
-    },
-
+    }
   );
-    // BoundingBox.associate = function (models) {
-    //     // associations can be defined here
-    // };
   return BoundingBox;
 };

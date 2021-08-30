@@ -18,6 +18,7 @@ export const errorResponse = (
   success: false,
 });
 
+//Email validation
 export const validateEmail = (email) => {
   // eslint-disable-next-line no-useless-escape
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -34,12 +35,12 @@ export const validateFields = (object, fields) => {
   return errors.length ? `${errors.join(', ')} are required fields.` : '';
 };
 
+//Unique id validation
 export const uniqueId = (length = 13) => {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i=+1) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
